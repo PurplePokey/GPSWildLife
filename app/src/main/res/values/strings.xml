@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Wildlife GPS</string>
+    <string name="login">Log In</string>
+    <string name="username_label">Username:</string>
+    <string name="password_label">Password:</string>
+    <string name="register_label"><u>Register</u></string>
+    <string name="no_acc_label">No account? </string>
+    <string name="icon_desc">GPS Wildlife Icon</string>
+    <string name="create_acc_button">Create Account</string>
+    <string name="have_account">Already have an account?</string>
+    <string name="log_in_text_button"><u>Log In</u></string>
+    <string name="confirm_password">Confirm Password:</string>
+    <string name="map_view">Map View</string>
+    <string name="cancel_text">Cancel</string>
+    <string name="create_sighting_text">Create Sighting</string>
+    <string name="title_text">Title</string>
+    <string name="desc_text">Description</string>
+    <string name="tag_hint">Enter tags seperated by a space</string>
+    <string name="plus">+</string>
+</resources>
