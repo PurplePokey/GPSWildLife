@@ -18,9 +18,17 @@
     <string name="tag_hint">Enter tags seperated by a space</string>
     <string name="plus">+</string>
     <string name="create_found_listing">Create Listing</string>
-    <string name="type" />
     <string name="type_of_pet">Type of pet</string>
     <string name="pet_name">Name of pet</string>
     <string name="found_pet_desc">Additional details, contact information, etc.</string>
     <string name="list_view_str">List View</string>
+    <string name="back_button_text">Back</string>
+    <string name="flag_button_text">Flag</string>
+    <string name="delete_sighting_test">Delete Sighting</string>
+    <string name="learn_more_text">Learn More</string>
+    <string name="animal_still_here_str">Is this animal still here?</string>
+    <string name="no_text">No</string>
+    <string name="yes_text">Yes</string>
+    <string name="comment_str">Comments</string>
+    <string name="add_comment_str">Add Comment</string>
 </resources>
