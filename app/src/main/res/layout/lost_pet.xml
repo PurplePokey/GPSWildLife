@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="425dp"
+        android:layout_height="415dp"
+        android:background="@drawable/rounded_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.632">
+
+        <EditText
+            android:id="@+id/name_pet_lost"
+            android:layout_width="309dp"
+            android:layout_height="47dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="56dp"
+            android:autofillHints=""
+            android:background="@drawable/rounded_textbox"
+            android:ems="10"
+            android:hint="@string/pet_name"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toTopOf="@+id/desc_pet_lost"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/type_pet_lost"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <EditText
+            android:id="@+id/type_pet_lost"
+            android:layout_width="309dp"
+            android:layout_height="47dp"
+            android:autofillHints=""
+            android:background="@drawable/rounded_textbox"
+            android:ems="10"
+            android:hint="@string/type_of_pet"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.517"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.043" />
+
+        <EditText
+            android:id="@+id/desc_pet_lost"
+            android:layout_width="309dp"
+            android:layout_height="145dp"
+            android:layout_marginBottom="116dp"
+            android:background="@drawable/rounded_textbox"
+            android:ems="10"
+            android:hint="@string/found_pet_desc"
+            android:inputType="textMultiLine|textPersonName"
+            android:maxLines="6"
+            android:nestedScrollingEnabled="true"
+            android:singleLine="false"
+            android:textAlignment="viewStart"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sighting_title_create"
+            app:layout_constraintVertical_bias="0.074" />
+
+        <Button
+            android:id="@+id/cancel_pet_lost"
+            android:layout_width="110dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="34dp"
+            android:layout_marginBottom="28dp"
+            android:background="@drawable/rounded_textbox"
+            android:text="@string/cancel_text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="@color/common_google_signin_btn_text_dark_focused"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.184"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sighting_tags_create"
+            app:layout_constraintVertical_bias="0.24" />
+
+        <Button
+            android:id="@+id/create_pet_lost"
+            android:layout_width="170dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="33dp"
+            android:layout_marginEnd="56dp"
+            android:layout_marginBottom="28dp"
+            android:background="@drawable/rounded_button"
+            android:text="@string/create_found_listing"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="@color/colorAccent"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.333"
+            app:layout_constraintStart_toEndOf="@+id/cancel_create_sighting"
+            app:layout_constraintTop_toBottomOf="@+id/sighting_tags_create"
+            app:layout_constraintVertical_bias="0.246" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/lost_pet_pic"
+        android:layout_width="214dp"
+        android:layout_height="188dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:srcCompat="@tools:sample/avatars" />
+</androidx.constraintlayout.widget.ConstraintLayout>

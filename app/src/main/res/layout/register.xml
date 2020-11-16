@@ -8,15 +8,15 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
-        android:layout_width="350dp"
-        android:layout_height="527dp"
+        android:layout_width="374dp"
+        android:layout_height="417dp"
         android:background="@drawable/rounded_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.567"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.568">
+        app:layout_constraintVertical_bias="0.464">
 
         <TextView
             android:id="@+id/username_create_label"
@@ -42,10 +42,10 @@
             android:inputType="textPersonName"
             app:layout_constraintBottom_toTopOf="@+id/password_create"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.507"
+            app:layout_constraintHorizontal_bias="0.465"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.782" />
+            app:layout_constraintVertical_bias="0.606" />
 
         <TextView
             android:id="@+id/password_create_label"
@@ -65,27 +65,27 @@
             android:id="@+id/password_create"
             android:layout_width="213dp"
             android:layout_height="40dp"
-            android:layout_marginBottom="52dp"
+            android:layout_marginBottom="44dp"
             android:background="@drawable/rounded_textbox"
             android:contentDescription="@string/password_label"
             android:ems="10"
             android:inputType="textPassword"
             app:layout_constraintBottom_toTopOf="@+id/password_confirm"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.489"
+            app:layout_constraintHorizontal_bias="0.478"
             app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
             android:id="@+id/password_confirm"
             android:layout_width="213dp"
             android:layout_height="40dp"
-            android:layout_marginBottom="28dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/rounded_textbox"
             android:ems="10"
             android:inputType="textPassword"
             app:layout_constraintBottom_toTopOf="@+id/create_account"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.507"
+            app:layout_constraintHorizontal_bias="0.472"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
@@ -100,10 +100,10 @@
             android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.503"
+            app:layout_constraintHorizontal_bias="0.473"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.843" />
+            app:layout_constraintVertical_bias="0.736" />
 
         <TextView
             android:id="@+id/login_instead"
@@ -142,18 +142,20 @@
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/password_confirm"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.327"
+            app:layout_constraintHorizontal_bias="0.319"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/password_create" />
+            app:layout_constraintTop_toBottomOf="@+id/password_create"
+            app:layout_constraintVertical_bias="0.583" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
         android:id="@+id/icon5"
-        android:layout_width="252dp"
-        android:layout_height="251dp"
+        android:layout_width="172dp"
+        android:layout_height="147dp"
         android:contentDescription="@string/icon_desc"
         android:src="@mipmap/ic_inapp_foreground"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
