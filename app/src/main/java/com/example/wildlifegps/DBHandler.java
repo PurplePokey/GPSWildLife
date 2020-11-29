@@ -184,7 +184,7 @@ public class DBHandler extends SQLiteOpenHelper {
             boolean bool= false;
             int sightingID = sighting.getID();
 
-            Cursor cursor = db.rawQuery("SELECT content FROM"+ TABLE_NAME_TAGS + "WHERE content = " + tag,null);
+            Cursor cursor = db.rawQuery("SELECT content FROM"+ TABLE_NAME_TAGS + "WHERE content = '" + tag + "'",null);
             bool=cursor.moveToFirst();
 
             if(!bool){
@@ -228,7 +228,7 @@ public class DBHandler extends SQLiteOpenHelper {
             int ID= sighting.getID();
             int flag = sighting.getFlagCount();
 
-            db.execSQL("UPDATE " + TABLE_NAME_SIGHTINGS + " SET flagCount = " + flag+ " WHERE sighting_id = "+ID);
+            db.execSQL("UPDATE " + TABLE_NAME_SIGHTINGS + " SET flagCount = '" + flag+ "' WHERE sighting_id = '"+ID+"'");
 
         }
 
@@ -241,9 +241,9 @@ public class DBHandler extends SQLiteOpenHelper {
                 addTag(sighting, tags.get(i));
             }
 
-            db.execSQL("UPDATE " + TABLE_NAME_SIGHTINGS + " SET imgFile = " + imageFile+ " WHERE sighting_id = "+sightingID);
-            db.execSQL("UPDATE " + TABLE_NAME_SIGHTINGS + " SET description = " + desc+ " WHERE sighting_id = "+sightingID);
-            db.execSQL("UPDATE " + TABLE_NAME_SIGHTINGS + " SET title = " + title+ " WHERE sighting_id = "+sightingID);
+            db.execSQL("UPDATE " + TABLE_NAME_SIGHTINGS + " SET imgFile = '" + imageFile+ "' WHERE sighting_id = '"+sightingID+"'");
+            db.execSQL("UPDATE " + TABLE_NAME_SIGHTINGS + " SET description = '" + desc+ "' WHERE sighting_id = '"+sightingID+"'");
+            db.execSQL("UPDATE " + TABLE_NAME_SIGHTINGS + " SET title = '" + title+ "' WHERE sighting_id = '"+sightingID+"'");
         }
 
         public void updateTime(Sighting sighting){
@@ -255,7 +255,7 @@ public class DBHandler extends SQLiteOpenHelper {
             String time = timestamp.get(Calendar.HOUR_OF_DAY) + ":" + timestamp.get(Calendar.MINUTE) + " " + timestamp.get(Calendar.MONTH) +
                     ":" + timestamp.get(Calendar.DAY_OF_MONTH) + ":" + timestamp.get(Calendar.YEAR);
 
-            db.execSQL("UPDATE " + TABLE_NAME_SIGHTINGS + " SET timeStamp = " + time+ " WHERE sighting_id = "+sightingID);
+            db.execSQL("UPDATE " + TABLE_NAME_SIGHTINGS + " SET timeStamp = '" + time+ "' WHERE sighting_id = '"+sightingID+"'");
         }
 
         //DELETE
@@ -264,7 +264,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
             int ID= sighting.getID();
 
-            db.execSQL("DELETE FROM "+ TABLE_NAME_SIGHTINGS+" WHERE sighting_id = "+ ID);
+            db.execSQL("DELETE FROM "+ TABLE_NAME_SIGHTINGS+" WHERE sighting_id = '"+ ID+"'");
 
         }
 
