@@ -26,6 +26,10 @@
 
         </activity>
 
+        <activity android:name=".deleteSighting">
+
+        </activity>
+
     </application>
 
 </manifest>
