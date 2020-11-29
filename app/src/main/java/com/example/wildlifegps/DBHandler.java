@@ -24,6 +24,7 @@ public class DBHandler extends SQLiteOpenHelper {
         public static final String TABLE_NAME_ANIMALS = "Animals";
         public static final String TABLE_NAME_SPECIES = "Species";
         public static final String TABLE_NAME_PETS = "Pets";
+        public static final String TABLE_NAME_OBSERVERS = "Observers";
         public static final String COLUMN_USERNAME = "Username";
         public static final String COLUMN_PASSWORD = "Password";
         //initialize the database
@@ -41,7 +42,6 @@ public class DBHandler extends SQLiteOpenHelper {
                     +"sighting_id int primary key,"
                     +"longitude decimal(8, 5),"
                     +"latitude decimal(8,5),"
-                    //+"location varchar(30) not null,"
                     +"timeStamp varchar(20),"
                     +"title varchar(100),"
                     +"description varchar(280),"
@@ -123,6 +123,7 @@ public class DBHandler extends SQLiteOpenHelper {
             contentValues.put("password", password);
 
             db.insert(TABLE_NAME_USERS, null, contentValues);
+            db.close();
 
         }
 
@@ -154,6 +155,7 @@ public class DBHandler extends SQLiteOpenHelper {
             contentValues.put("username", username);
 
             db.insert(TABLE_NAME_SIGHTINGS, null, contentValues);
+            db.close();
 
         }
 
@@ -176,6 +178,7 @@ public class DBHandler extends SQLiteOpenHelper {
             contentValues.put("content", content);
 
             db.insert(TABLE_NAME_COMMENTS, null, contentValues);
+            db.close();
 
         }
 
@@ -197,6 +200,7 @@ public class DBHandler extends SQLiteOpenHelper {
             contentValues1.put("content", tag);
             contentValues1.put("sighting_id", sightingID);
             db.insert(TABLE_NAME_SIGHTINGTAGS, null, contentValues1);
+            db.close();
         }
 
         public void addPet(Pet pet){
@@ -218,6 +222,7 @@ public class DBHandler extends SQLiteOpenHelper {
             contentValues2.put("animal_id", animalID);
             contentValues2.put("lost_or_found", lostFound);
             db.insert(TABLE_NAME_PETS, null, contentValues);
+            db.close();
 
         }
 
@@ -229,6 +234,7 @@ public class DBHandler extends SQLiteOpenHelper {
             int flag = sighting.getFlagCount();
 
             db.execSQL("UPDATE " + TABLE_NAME_SIGHTINGS + " SET flagCount = '" + flag+ "' WHERE sighting_id = '"+ID+"'");
+            db.close();
 
         }
 
@@ -244,6 +250,7 @@ public class DBHandler extends SQLiteOpenHelper {
             db.execSQL("UPDATE " + TABLE_NAME_SIGHTINGS + " SET imgFile = '" + imageFile+ "' WHERE sighting_id = '"+sightingID+"'");
             db.execSQL("UPDATE " + TABLE_NAME_SIGHTINGS + " SET description = '" + desc+ "' WHERE sighting_id = '"+sightingID+"'");
             db.execSQL("UPDATE " + TABLE_NAME_SIGHTINGS + " SET title = '" + title+ "' WHERE sighting_id = '"+sightingID+"'");
+            db.close();
         }
 
         public void updateTime(Sighting sighting){
@@ -256,6 +263,7 @@ public class DBHandler extends SQLiteOpenHelper {
                     ":" + timestamp.get(Calendar.DAY_OF_MONTH) + ":" + timestamp.get(Calendar.YEAR);
 
             db.execSQL("UPDATE " + TABLE_NAME_SIGHTINGS + " SET timeStamp = '" + time+ "' WHERE sighting_id = '"+sightingID+"'");
+            db.close();
         }
 
         //DELETE
@@ -265,7 +273,7 @@ public class DBHandler extends SQLiteOpenHelper {
             int ID= sighting.getID();
 
             db.execSQL("DELETE FROM "+ TABLE_NAME_SIGHTINGS+" WHERE sighting_id = '"+ ID+"'");
-
+            db.close();
         }
 
 
@@ -289,7 +297,7 @@ public class DBHandler extends SQLiteOpenHelper {
             bool=cursor.moveToFirst();
 
             //db.close();
-
+            db.close();
             return bool;
 
         }
@@ -324,13 +332,13 @@ public class DBHandler extends SQLiteOpenHelper {
                 //temp.getTags();
                 username=(cursor.getString(8));
                 temp.getOwner().setUsername(username);
+                //temp.setAnimal(Integer.parseInt(cursor.getString(9)));
                 sightings.add(temp);
             }
-
+            db.close();
             return sightings;
         }
 
-        ///76.2874273 87.47834
         public ArrayList<Sighting> searchByLocation(Location loc){
             ArrayList<Sighting> sightings = new ArrayList<>();
             String time;
@@ -364,15 +372,80 @@ public class DBHandler extends SQLiteOpenHelper {
                 temp.getOwner().setUsername(username);
                 sightings.add(temp);
             }
-
+            db.close();
             return sightings;
         }
 
+        public ArrayList<Sighting> filterByTime(){
+            SQLiteDatabase db = this.getWritableDatabase();
+            ArrayList<Sighting> sightings = new ArrayList<>();
+            Location location = new Location("");
+            String time;
+            String username;
 
+            //sighting_id may nee to be surrounded by ' '
+            Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME_SIGHTINGS + " ORDER BY sighting_id DESC", null);
 
+            cursor.moveToFirst();
+            while(!cursor.isAfterLast()) {
+                Sighting temp = new Sighting();
+                temp.setID(Integer.parseInt(cursor.getString(0)));
+                location.setLongitude(Double.parseDouble(cursor.getString(1)));
+                location.setLatitude(Double.parseDouble(cursor.getString(2)));
+                //temp.setLocation(cursor.getString(1));
+                time=cursor.getString(3);
+                //HH:MM MM/DD/YY
+                String[] arr = time.replaceAll("[\\:\\/]", " ").split(" ");
+                Calendar cal = Calendar.getInstance();
+                cal.set(Integer.parseInt(arr[4]), Integer.parseInt(arr[2]), Integer.parseInt(arr[3]), Integer.parseInt(arr[0]), Integer.parseInt(arr[1]));
+                temp.setTimestamp(cal);
+                temp.setTitle(cursor.getString(4));
+                temp.setDescription(cursor.getString(5));
+                temp.setImageFileName(cursor.getString(6));
+                temp.setFlagCount(Integer.parseInt(cursor.getString(7)));
+                //temp.getTags();
+                username=(cursor.getString(8));
+                temp.getOwner().setUsername(username);
+                sightings.add(temp);
+            }
+            db.close();
+            return sightings;
+        }
 
+        public Animal getAnimal(int animal_id){
+            SQLiteDatabase db = this.getWritableDatabase();
+            ArrayList<String> observers = new ArrayList<>();
+            Animal animal = null;
+            Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME_ANIMALS + " WHERE animal_id = '"+ animal_id+"'", null);
 
+            animal.setAnimalID(Integer.parseInt(cursor.getString(0)));
+            animal.setCommonName(cursor.getString(1));
 
+            Cursor cursor1 = db.rawQuery("SELECT * FROM " + TABLE_NAME_ANIMALS + " a " + " LEFT OUTER JOIN " + TABLE_NAME_OBSERVERS + " o "
+                        + " ON a.animal_id = o.animal_id", null);
+
+            cursor1.moveToFirst();
+            while(!cursor1.isAfterLast()) {
+                observers.add(cursor.getString(0));
+            }
+
+            animal.setObservers(observers);
+
+            //check if it is a species
+            boolean bool = false;
+            Cursor cursor2 = db.rawQuery("SELECT * FROM "+ TABLE_NAME_SPECIES + " WHERE animal_id = '" + animal.getAnimalID() + "'",null);
+            bool=cursor.moveToFirst();
+            if(bool){
+                Species species = new Species(animal.getAnimalID(), animal.getCommonName(), cursor2.getString(0), cursor2.getString(2),
+                        cursor2.getString(3), cursor2.getString(4));
+                db.close();
+                return species;
+            }
+            else{
+                db.close();
+                return animal;
+            }
+        }
 
         public void onUpgrade(SQLiteDatabase db, int i, int i1) {}
 //        public String loadHandler(String tableName) {

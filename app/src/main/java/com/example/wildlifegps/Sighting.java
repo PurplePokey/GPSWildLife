@@ -9,6 +9,7 @@ public class Sighting {
     private String title;
     private int ID;
     private User owner;
+    private Animal animal;
     //private String location;
     private Location location;
     private Calendar timestamp;
@@ -16,6 +17,14 @@ public class Sighting {
     private String imageFileName;
     private int flagCount;
     private ArrayList<String> tags = new ArrayList<>();
+
+    public Animal getAnimal() {
+        return animal;
+    }
+
+    public void setAnimal(Animal animal) {
+        this.animal = animal;
+    }
 
     public String getTitle() {
         return title;

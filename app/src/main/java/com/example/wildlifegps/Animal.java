@@ -6,7 +6,7 @@ public abstract class Animal {
 
     private int animalID;
     private String commonName;
-    private ArrayList<User> observers;
+    private ArrayList<String> observers;
 
     Animal(int animalID, String commonName){
         this.animalID=animalID;
@@ -30,11 +30,11 @@ public abstract class Animal {
         this.commonName = commonName;
     }
 
-    public ArrayList<User> getObservers() {
+    public ArrayList<String> getObservers() {
         return observers;
     }
 
-    public void addObserver(User user){
+    public void addObserver(String user){
         observers.add(user);
     }
 
@@ -42,7 +42,7 @@ public abstract class Animal {
         observers.remove(user);
     }
 
-    public void setObservers(ArrayList<User> observers) {
+    public void setObservers(ArrayList<String> observers) {
         this.observers = observers;
     }
 }
