@@ -31,4 +31,6 @@
     <string name="yes_text">Yes</string>
     <string name="comment_str">Comments</string>
     <string name="add_comment_str">Add Comment</string>
+    <string name="update_str">Update Sighting</string>
+    <string name="request_str">Request Identification?</string>
 </resources>

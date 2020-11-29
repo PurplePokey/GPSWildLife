@@ -1,5 +1,7 @@
 package com.example.wildlifegps;
 
+import android.location.Location;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -7,7 +9,8 @@ public class Sighting {
     private String title;
     private int ID;
     private User owner;
-    private String location;
+    //private String location;
+    private Location location;
     private Calendar timestamp;
     private String description;
     private String imageFileName;
@@ -30,11 +33,11 @@ public class Sighting {
         this.owner = owner;
     }
 
-    public String getLocation() {
+    public Location getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
+    public void setLocation(Location location) {
         this.location = location;
     }
 
