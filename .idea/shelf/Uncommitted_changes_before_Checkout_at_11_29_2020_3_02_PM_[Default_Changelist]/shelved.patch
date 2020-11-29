@@ -1,0 +1,28 @@
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"GradleSettings\">\r\n    <option name=\"linkedExternalProjectsSettings\">\r\n      <GradleProjectSettings>\r\n        <compositeConfiguration>\r\n          <compositeBuild compositeDefinitionSource=\"SCRIPT\" />\r\n        </compositeConfiguration>\r\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"resolveModulePerSourceSet\" value=\"false\" />\r\n        <option name=\"testRunner\" value=\"PLATFORM\" />\r\n      </GradleProjectSettings>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/gradle.xml	(revision d746443843e4d35415f5f8ed9d691e11cebf5747)
++++ .idea/gradle.xml	(date 1606683739744)
+@@ -1,15 +1,17 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
++  <component name="GradleMigrationSettings" migrationVersion="1" />
+   <component name="GradleSettings">
+     <option name="linkedExternalProjectsSettings">
+       <GradleProjectSettings>
+         <compositeConfiguration>
+           <compositeBuild compositeDefinitionSource="SCRIPT" />
+         </compositeConfiguration>
++        <option name="testRunner" value="PLATFORM" />
+         <option name="distributionType" value="DEFAULT_WRAPPED" />
+         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+         <option name="resolveModulePerSourceSet" value="false" />
+-        <option name="testRunner" value="PLATFORM" />
++        <option name="useQualifiedModuleNames" value="true" />
+       </GradleProjectSettings>
+     </option>
+   </component>
