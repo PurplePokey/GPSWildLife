@@ -11,9 +11,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class deleteSighting extends Activity {
+public class deleteSighting extends Activity implements Serializable {
 
     private final deleteSighting activity = deleteSighting.this;
 
