@@ -28,6 +28,17 @@
 
         </activity>
 
+        <activity android:name=".deleteSighting">
+
+        </activity>
+
+        <activity android:name=".search">
+
+        </activity>
+
+        <activity android:name=".addComment">
+
+        </activity>
     </application>
 
 </manifest>
