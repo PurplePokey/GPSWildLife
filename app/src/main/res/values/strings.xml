@@ -33,4 +33,12 @@
     <string name="add_comment_str">Add Comment</string>
     <string name="update_str">Update Sighting</string>
     <string name="request_str">Request Identification?</string>
+    <string name="notifications_header_str">Notification Manager\ \ </string>
+    <string name="notification_str">Toggle Notifications</string>
+    <string name="off_str">Off</string>
+    <string name="on_str">On</string>
+    <string name="status_str">Status:</string>
+    <string name="appearance_str">Appearance:</string>
+    <string name="diet_str">Diet:</string>
+    <string name="sighting_history_str">Sighting History:</string>
 </resources>

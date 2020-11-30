@@ -127,17 +127,34 @@
         app:layout_constraintVertical_bias="0.92" />
 
     <Spinner
-        android:id="@+id/search_type"
+        android:id="@+id/search_list_dropdown"
         android:layout_width="89dp"
         android:layout_height="49dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="7dp"
         android:layout_marginBottom="272dp"
-        android:background="@drawable/rounded_background"
+        android:background="@color/text_box"
+        android:entries="@array/dropDown"
         app:layout_constraintBottom_toTopOf="@+id/cardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/searchView"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/notifications_list_btn"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="185dp"
+        android:layout_marginEnd="232dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/rounded_black_btn"
+        android:foregroundTint="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/add_sighting"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView"
+        app:srcCompat="@android:drawable/ic_popup_reminder" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
