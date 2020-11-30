@@ -1,8 +1,9 @@
 package com.example.wildlifegps;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class Animal {
+public abstract class Animal implements Serializable {
 
     private int animalID;
     private String commonName;
