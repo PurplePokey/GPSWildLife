@@ -60,7 +60,6 @@ public class ListView extends AppCompatActivity{
         testSighting.setDescription("Look it's a bird, no it's a plane, no it's really a bird");
     }
 
-    //@Override
     private View.OnClickListener click = new View.OnClickListener() {
         public void onClick(View view) {
 

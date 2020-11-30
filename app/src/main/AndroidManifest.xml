@@ -32,6 +32,10 @@
 
         </activity>
 
+        <activity android:name=".AnimalInformation">
+
+        </activity>
+
 
     </application>
 
