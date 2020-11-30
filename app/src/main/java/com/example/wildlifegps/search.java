@@ -9,10 +9,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class search extends AppCompatActivity{
+public class search extends AppCompatActivity implements Serializable {
 
     private final search activity = search.this;
 
@@ -27,15 +28,8 @@ public class search extends AppCompatActivity{
         setContentView(R.layout.list_view);
         searchView = (SearchView) findViewById(R.id.searchView);
 
-        try
-        {
-            dbh = new DBHandler(activity);
+        dbh = new DBHandler(activity);
 
-        }
-        catch(SQLiteException e)
-        {
-            System.out.print("ERROR");
-        }
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 

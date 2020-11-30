@@ -29,16 +29,7 @@ public class deleteSighting extends Activity implements Serializable {
         setContentView(R.layout.sighting_view);
 
         b = (Button)findViewById(R.id.delete_sighting);
-
-        try
-        {
-            dbh = new DBHandler(activity);
-
-        }
-        catch(SQLiteException e)
-        {
-            System.out.print("ERROR");
-        }
+        dbh = new DBHandler(activity);
 
         b.setOnClickListener(new View.OnClickListener() {
 

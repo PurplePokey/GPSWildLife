@@ -11,14 +11,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 
-public class addComment extends AppCompatActivity {
+import java.io.Serializable;
+
+public class addComment extends AppCompatActivity implements Serializable {
 
     private final addComment activity = addComment.this;
 
     Button b;
     TextInputEditText box;
     DBHandler dbh;
-    Sighting sighting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,16 +29,7 @@ public class addComment extends AppCompatActivity {
 
         b = (Button)findViewById(R.id.post_comment);
         box = (TextInputEditText)findViewById(R.id.comment_textbox);
-
-        try
-        {
-            dbh = new DBHandler(activity);
-
-        }
-        catch(SQLiteException e)
-        {
-            System.out.print("ERROR");
-        }
+        dbh = new DBHandler(activity);
 
         b.setOnClickListener(new View.OnClickListener() {
 
