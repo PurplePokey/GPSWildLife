@@ -1,22 +1,21 @@
 package com.example.wildlifegps;
 
 import android.database.sqlite.SQLiteException;
+import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class search extends AppCompatActivity {
+public class search extends AppCompatActivity{
 
     private final search activity = search.this;
 
-    Geocoder geocoder = new Geocoder();
     DBHandler dbh;
     SearchView searchView;
     ListView listView;
@@ -43,11 +42,6 @@ public class search extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if(query.matches("[0-9]+") && query.length() == 5){
-
-                    String response = geocoder.GeocodeSync(query);
-                    JsonNode responseJsonNode = mapper.readTree(response);
-
-                    JsonNode items = responseJsonNode.get("items");
 
                 }
                 else if(query.matches("[a-zA-Z]+")){
