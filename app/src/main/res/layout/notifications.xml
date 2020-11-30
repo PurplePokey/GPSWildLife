@@ -1,6 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/subButton"
+        android:layout_width="120dp"
+        android:layout_height="39dp"
+        android:text="Subscribe"
+        tools:layout_editor_absoluteX="27dp"
+        tools:layout_editor_absoluteY="54dp" />
+
+    <Button
+        android:id="@+id/unsubButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Unsubscribe"
+        tools:layout_editor_absoluteX="25dp"
+        tools:layout_editor_absoluteY="122dp" />
+
+    <Button
+        android:id="@+id/buttonWarn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Warning"
+        tools:layout_editor_absoluteX="27dp"
+        tools:layout_editor_absoluteY="189dp" />
+
+    <Button
+        android:id="@+id/buttonFound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Found"
+        tools:layout_editor_absoluteX="23dp"
+        tools:layout_editor_absoluteY="255dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
