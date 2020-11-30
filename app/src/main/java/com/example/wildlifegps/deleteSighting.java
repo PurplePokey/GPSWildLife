@@ -38,8 +38,11 @@ public class deleteSighting extends Activity implements Serializable {
                 dbh.deleteSighting(sighting);
 
                 Toast.makeText(activity, "Sighting Successfully Deleted", Toast.LENGTH_LONG).show();
+
                 Intent intentDelete = new Intent(getApplicationContext(), ListView.class);
+                intentDelete.putExtra("Sighting", (Serializable) sighting);
                 startActivity(intentDelete);
+
             }
         });
     }

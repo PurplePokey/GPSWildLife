@@ -1,21 +1,18 @@
 package com.example.wildlifegps;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteException;
 import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 public class search extends AppCompatActivity implements Serializable {
@@ -31,7 +28,9 @@ public class search extends AppCompatActivity implements Serializable {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_view);
-        searchView = (SearchView) findViewById(R.id.searchView);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) findViewById(R.id.search_View);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         spin = (Spinner)findViewById(R.id.search_list_dropdown);
         dbh = new DBHandler(activity);
 

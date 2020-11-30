@@ -18,7 +18,7 @@
         android:entries="@array/dropDown"
         app:layout_constraintBottom_toTopOf="@+id/cardView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/searchView"
+        app:layout_constraintStart_toEndOf="@+id/search_View"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -34,13 +34,13 @@
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/cardView"
-        app:layout_constraintEnd_toStartOf="@+id/searchView"
+        app:layout_constraintEnd_toStartOf="@+id/search_View"
         app:layout_constraintHorizontal_bias="0.355"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <SearchView
-        android:id="@+id/searchView"
+        android:id="@+id/search_View"
         android:layout_width="174dp"
         android:layout_height="48dp"
         android:layout_marginTop="32dp"
