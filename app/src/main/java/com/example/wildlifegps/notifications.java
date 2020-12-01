@@ -1,23 +1,62 @@
 package com.example.wildlifegps;
 
+import android.Manifest;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
 import java.lang.Object;
+
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class notifications extends AppCompatActivity {
     boolean Subscribed;
+    private LocationManager locationManager;
+    private LocationListener locationListener;
+    TextView t = findViewById(R.id.textLocation);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notifications);
+
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                t.append("\n " + location.getLongitude() + " " + location.getLatitude());
+            }
+
+            @Override
+            public void onStatusChanged(String s, int i, Bundle bundle) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String s) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String s) {
+
+                Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(i);
+            }
+        };
 
         // Finds the subscribe button from the xml layout file
         final Button SubNotificationButton = findViewById(R.id.subButton);
@@ -59,12 +98,15 @@ public class notifications extends AppCompatActivity {
         });
 
         //Warning listener
+
         warningNotificationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Starts the function below
                 if(Subscribed == true) {
                     warnNotification();
+                    LocationUpdate();
+
                 }
             }
         });
@@ -79,6 +121,20 @@ public class notifications extends AppCompatActivity {
                 foundNotification();
             }
         });
+    }
+
+    void LocationUpdate(){
+        // first check for permissions
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.INTERNET}
+                        ,10);
+            }
+            return;
+        }
+        //noinspection MissingPermission
+        //locationManager.requestLocationUpdates("gps", 5000, 0, LocationListener);
+
     }
 
     // Creates and displays a warning notification
