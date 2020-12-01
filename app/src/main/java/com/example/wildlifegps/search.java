@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Location;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,28 +18,30 @@ import java.util.Locale;
 
 public class search extends AppCompatActivity implements Serializable {
 
-    private final search activity = search.this;
+    private final AppCompatActivity activity = search.this;
 
-    DBHandler dbh;
-    SearchView searchView;
-    ArrayList<Sighting> list;
-    Spinner spin;
+
+    private DBHandler dbh;
+    private SearchView searchView;
+    private ArrayList<Sighting> list;
+    private Spinner spin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_view);
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView = (SearchView) findViewById(R.id.search_View);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         spin = (Spinner)findViewById(R.id.search_list_dropdown);
         dbh = new DBHandler(activity);
 
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
+
+
             @Override
             public boolean onQueryTextSubmit(String query) {
+                Toast.makeText(search.this, query,Toast.LENGTH_LONG).show();
                 if(spin.getSelectedItemPosition() == 0){
                     Address add = new Address(Locale.US);
                     add.setPostalCode(query);
@@ -47,13 +50,18 @@ public class search extends AppCompatActivity implements Serializable {
                     Location loc = new Location("");
                     loc.setLatitude(lat);
                     loc.setLongitude(lon);
+                    Toast.makeText(search.this, query,Toast.LENGTH_LONG).show();
                     list = dbh.searchByLocation(loc);
+
                 }
                 else if(spin.getSelectedItemPosition() == 1){
                     list = dbh.searchByTag(query);
+                    Toast.makeText(search.this, query,Toast.LENGTH_LONG).show();
+
                 }
                 else{
-                    Toast.makeText(search.this, "No Match found",Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity, "No Match found",Toast.LENGTH_LONG).show();
+
                 }
                 Intent intentSearch = new Intent(getApplicationContext(), Sighting.class);
                 startActivity(intentSearch);
@@ -62,6 +70,7 @@ public class search extends AppCompatActivity implements Serializable {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+
                 return false;
             }
 

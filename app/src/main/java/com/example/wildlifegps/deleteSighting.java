@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,13 +15,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.Serializable;
 import java.util.List;
 
-public class deleteSighting extends Activity implements Serializable {
+public class deleteSighting extends AppCompatActivity implements View.OnClickListener {
 
     private final deleteSighting activity = deleteSighting.this;
 
-    Button b;
-    DBHandler dbh;
-    Sighting sighting;
+    private Button b;
+    private DBHandler dbh;
+    private Sighting sighting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,24 +29,38 @@ public class deleteSighting extends Activity implements Serializable {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sighting_view);
 
-        b = (Button)findViewById(R.id.delete_sighting);
-        dbh = new DBHandler(activity);
+        getSupportActionBar().hide();
 
-        b.setOnClickListener(new View.OnClickListener() {
+        initViews();
+        initListeners();
+        initObjects();
 
-            @Override
-            public void onClick(View v) {
-                dbh.deleteSighting(sighting);
-
-                Toast.makeText(activity, "Sighting Successfully Deleted", Toast.LENGTH_LONG).show();
-
-                Intent intentDelete = new Intent(getApplicationContext(), ListView.class);
-                intentDelete.putExtra("Sighting", (Serializable) sighting);
-                startActivity(intentDelete);
-
-            }
-        });
     }
 
+    private void initViews(){
+        b = (Button)findViewById(R.id.delete_sighting);
+    }
+
+    private void initListeners(){
+        b.setOnClickListener((View.OnClickListener) this);
+    }
+
+    private void initObjects(){
+        dbh =new DBHandler(activity);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view.getId()==(R.id.login)){
+            dbh.deleteSighting(sighting);
+
+            Toast.makeText(activity, "Sighting Successfully Deleted", Toast.LENGTH_LONG).show();
+
+            Intent intentDelete = new Intent(getApplicationContext(), ListView.class);
+            intentDelete.putExtra("Sighting", (Serializable) sighting);
+            startActivity(intentDelete);
+
+        }
+    }
 }
 
