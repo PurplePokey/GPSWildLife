@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class addComment extends AppCompatActivity implements Serializable {
 
@@ -20,6 +21,8 @@ public class addComment extends AppCompatActivity implements Serializable {
     Button b;
     TextInputEditText box;
     DBHandler dbh;
+    Sighting sighting;
+    ArrayList<Comment> commentArr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +44,11 @@ public class addComment extends AppCompatActivity implements Serializable {
                     final String content = box.getText().toString();
                     Comment comment = new Comment();
                     comment.setComment(content);
-                    dbh.addComment(comment);
+                    commentArr.add(comment);
+                    sighting.setComments(commentArr);
+
+                    dbh.updateSighting(sighting);
+
                     Toast.makeText(activity, "Comment added!", Toast.LENGTH_LONG).show();
                 }
                 else {

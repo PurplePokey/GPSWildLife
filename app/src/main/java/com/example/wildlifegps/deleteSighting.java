@@ -12,8 +12,14 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.junit.Test;
+
 import java.io.Serializable;
+import java.sql.Connection;
 import java.util.List;
+
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNull;
 
 public class deleteSighting extends AppCompatActivity implements View.OnClickListener {
 
@@ -62,5 +68,6 @@ public class deleteSighting extends AppCompatActivity implements View.OnClickLis
 
         }
     }
+    
 }
 

@@ -2,6 +2,7 @@ package com.example.wildlifegps;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,7 +39,7 @@ public class ViewSighting extends AppCompatActivity {
 
     //initialize view objects
     private void initViews(){
-        commonNameBox = (EditText) findViewById(R.id.common_species_name);
+        //commonNameBox = (EditText) findViewById(R.id.common_species_name);
         scienceNameBox = (TextView) findViewById(R.id.scientific_name);
         userBox = findViewById(R.id.poster_username);
         descriptBox = findViewById(R.id.sighting_desc);
@@ -76,7 +77,7 @@ public class ViewSighting extends AppCompatActivity {
     private View.OnClickListener learnMore = new View.OnClickListener() {
         public void onClick(View view) {
             Intent i = new Intent(ViewSighting.this, AnimalInformation.class);
-            i.putExtra("Sighting", sighting);
+            i.putExtra("Sighting", (Parcelable) sighting);
             startActivity(i);
         }
     };

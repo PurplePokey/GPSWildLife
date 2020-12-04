@@ -17,6 +17,7 @@ public class Sighting {
     private String imageFileName;
     private int flagCount;
     private ArrayList<String> tags = new ArrayList<>();
+    private ArrayList<Comment> comments = new ArrayList<>();
 
     public Animal getAnimal() {
         return animal;
@@ -88,6 +89,14 @@ public class Sighting {
 
     public void setTags(ArrayList<String> tags) {
         this.tags = tags;
+    }
+
+    public ArrayList<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(ArrayList<Comment> comments) {
+        this.comments = comments;
     }
 
     public int getID() {
