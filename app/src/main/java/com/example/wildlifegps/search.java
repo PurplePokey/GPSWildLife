@@ -8,6 +8,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,8 +40,6 @@ public class search extends AppCompatActivity implements Serializable {
 
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
-
 
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -85,8 +84,18 @@ public class search extends AppCompatActivity implements Serializable {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-
                 return false;
+            }
+
+
+            private boolean checkInput(EditText text){
+                String value = text.getText().toString().trim();
+                if(value.isEmpty()){
+                    return false;
+                }
+                else{
+                    return true;
+                }
             }
 
         });
