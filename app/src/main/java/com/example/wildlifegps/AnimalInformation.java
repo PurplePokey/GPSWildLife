@@ -8,7 +8,7 @@ public class AnimalInformation extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.animal_information);
+        setContentView(R.layout.animal_info);
 
         getSupportActionBar().hide();
 

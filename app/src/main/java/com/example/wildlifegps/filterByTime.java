@@ -2,6 +2,7 @@ package com.example.wildlifegps;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,6 +25,7 @@ public class filterByTime extends AppCompatActivity {
         arrayList = db.filterByTime();
 
         Intent intentFilterByTime = new Intent(getApplicationContext(), Sighting.class);
+        intentFilterByTime.putExtra("List of Sightings", (Parcelable) arrayList);
         startActivity(intentFilterByTime);
     }
 

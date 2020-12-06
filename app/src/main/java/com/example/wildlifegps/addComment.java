@@ -44,10 +44,15 @@ public class addComment extends AppCompatActivity implements Serializable {
                     final String content = box.getText().toString();
                     Comment comment = new Comment();
                     comment.setComment(content);
-                    commentArr.add(comment);
-                    sighting.setComments(commentArr);
+                    if(!sighting.getComments().isEmpty()){
+                        commentArr.add(comment);
+                        sighting.setComments(commentArr);
+                    }
+                    else{
+                        commentArr = sighting.getComments();
+                        commentArr.add(comment);
 
-                    dbh.updateSighting(sighting);
+                    }
 
                     Toast.makeText(activity, "Comment added!", Toast.LENGTH_LONG).show();
                 }
