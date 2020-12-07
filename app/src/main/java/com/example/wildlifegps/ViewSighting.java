@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class ViewSighting extends AppCompatActivity {
 
     private Sighting sighting = null;
-    private EditText commonNameBox;
+    private TextView commonNameBox;
     private TextView scienceNameBox;
     private TextView userBox;
     private TextView descriptBox;
@@ -38,8 +38,8 @@ public class ViewSighting extends AppCompatActivity {
 
     //initialize view objects
     private void initViews(){
-        commonNameBox = (EditText) findViewById(R.id.common_species_name);
-        scienceNameBox = (TextView) findViewById(R.id.scientific_name);
+        commonNameBox = findViewById(R.id.common_species_name);
+        scienceNameBox = findViewById(R.id.scientific_name);
         userBox = findViewById(R.id.poster_username);
         descriptBox = findViewById(R.id.sighting_desc);
         learnButton = findViewById(R.id.learn_more_btn);
