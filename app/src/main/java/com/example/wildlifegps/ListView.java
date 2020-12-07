@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.LinearLayout.LayoutParams;
 
 import org.w3c.dom.Text;
 
@@ -50,13 +51,13 @@ public class ListView extends AppCompatActivity{
     }
 
     private void initViews(){
-        image = findViewById(R.id.animal_image);
+       // image = findViewById(R.id.animal_image);
         cards = findViewById(R.id.cardView);
-        roundBackground = getDrawable(R.drawable.rounded_background);
+        roundBackground = getDrawable(R.drawable.rounded_textbox);
     }
 
     private void initListeners(){
-        image.setOnClickListener(click);
+       // image.setOnClickListener(click);
     }
 
     private void initObjects(){
@@ -94,22 +95,28 @@ public class ListView extends AppCompatActivity{
     private void display(){
         Calendar time = Calendar.getInstance();
         for(int i = 0; i < results.size(); i++){
-            ConstraintLayout box = new ConstraintLayout(this);
-            //ConstraintSet cons = new ConstraintSet();
-            box.setBackground(roundBackground);
-           // box.setConstraintSet();
+            LinearLayout bigBox = new LinearLayout(this);
+            LayoutParams bigParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+            bigParams.setMargins(50, 50, 50, 50);
+            bigBox.setLayoutParams(bigParams);
+            bigBox.setPadding(20, 20, 20, 20);
+
+            LinearLayout lilBox = new LinearLayout(this);
+            lilBox.setOrientation(LinearLayout.VERTICAL);
+            bigBox.setBackground(roundBackground);
+            bigBox.addView(lilBox);
             TextView speciesTest = new TextView(this);
             speciesTest.setText(results.get(i).getAnimal().getCommonName());
-            //box.addView(speciesTest);
+            lilBox.addView(speciesTest);
 
-            TextView distanceText = new TextView(this);
+            //TextView distanceText = new TextView(this);
             TextView recencyText = new TextView(this);
             String tmp;
             Calendar c = results.get(i).getTimestamp();
             tmp = timeElapsed(c, time);
             recencyText.setText(tmp);
-            box.addView(recencyText);
-            cards.addView(box);
+            lilBox.addView(recencyText);
+            cards.addView(bigBox);
         }
     }
 
