@@ -106,31 +106,29 @@ public class ListView extends AppCompatActivity{
             TextView recencyText = new TextView(this);
             String tmp;
             Calendar c = results.get(i).getTimestamp();
-            long secondsSinceCreation = (time.getTimeInMillis() - c.getTimeInMillis()) / 1000;
-            if(secondsSinceCreation < 61){
-                tmp = secondsSinceCreation + " seconds ago";
-                recencyText.setText(tmp);
-            }
-            else if(secondsSinceCreation < 3601){
-                tmp = (secondsSinceCreation / 60) + " minute(s) ago";
-                recencyText.setText(tmp);
-            }
-            else if(secondsSinceCreation < 86401){
-                tmp = (secondsSinceCreation / 3600) + " hour(s) ago";
-                recencyText.setText(tmp);
-            }
-            else if(secondsSinceCreation < (86400 * 365 + 1)){
-                tmp =(secondsSinceCreation / 86400) + " day(s) ago";
-                recencyText.setText(tmp);
-            }
-            else{
-                tmp = (secondsSinceCreation / (86400 * 365)) + " year(s) ago";
-                recencyText.setText(tmp);
-            }
-            
-            //recencyText.setText(tmp);
+            tmp = timeElapsed(c, time);
+            recencyText.setText(tmp);
             box.addView(recencyText);
             cards.addView(box);
+        }
+    }
+
+    private String timeElapsed (Calendar olderTime, Calendar curTime){
+        long secondsSinceCreation = (curTime.getTimeInMillis() - olderTime.getTimeInMillis()) / 1000;
+        if(secondsSinceCreation < 61){
+            return secondsSinceCreation + " seconds ago";
+        }
+        else if(secondsSinceCreation < 3601){
+            return (secondsSinceCreation / 60) + " minute(s) ago";
+        }
+        else if(secondsSinceCreation < 86401){
+            return (secondsSinceCreation / 3600) + " hour(s) ago";
+        }
+        else if(secondsSinceCreation < (86400 * 365 + 1)){
+            return (secondsSinceCreation / 86400) + " day(s) ago";
+        }
+        else{
+            return (secondsSinceCreation / (86400 * 365)) + " year(s) ago";
         }
     }
 
