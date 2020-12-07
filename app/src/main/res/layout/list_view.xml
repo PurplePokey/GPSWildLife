@@ -21,95 +21,101 @@
 
     </SearchView>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="339dp"
-        android:layout_height="107dp"
-        android:layout_marginStart="36dp"
-        android:background="@drawable/rounded_background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView">
+        app:layout_constraintTop_toBottomOf="@+id/searchView"
+        app:layout_constraintBottom_toTopOf="@+id/notifications_list_btn">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="339dp"
             android:layout_height="match_parent"
+            android:layout_marginStart="36dp"
             android:background="@drawable/rounded_background"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchView">
 
-            <ImageView
-                android:id="@+id/animal_image"
-                android:layout_width="127dp"
-                android:layout_height="89dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/rounded_background"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.013"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars[2]" />
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent">
 
-            <TextView
-                android:id="@+id/sighting_title"
-                android:layout_width="76dp"
-                android:layout_height="wrap_content"
-                android:text="Species"
-                android:textColor="@color/common_google_signin_btn_text_dark_focused"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.547"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.181" />
+                <ImageView
+                    android:id="@+id/animal_image"
+                    android:layout_width="127dp"
+                    android:layout_height="89dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.013"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@tools:sample/avatars[2]" />
 
-            <TextView
-                android:id="@+id/sighting_distance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text=".1 mi away"
-                android:textColor="@color/common_google_signin_btn_text_dark_focused"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.529"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/sighting_title" />
+                <TextView
+                    android:id="@+id/sighting_title"
+                    android:layout_width="76dp"
+                    android:layout_height="wrap_content"
+                    android:text="Species"
+                    android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.547"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.181" />
 
-            <TextView
-                android:id="@+id/sighting_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="23 min ago"
-                android:textColor="@color/common_google_signin_btn_text_dark_focused"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.537"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/sighting_distance"
-                app:layout_constraintVertical_bias="0.384" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/sighting_distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text=".1 mi away"
+                    android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.529"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/sighting_title" />
 
-    </androidx.cardview.widget.CardView>
+                <TextView
+                    android:id="@+id/sighting_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="23 min ago"
+                    android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.537"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/sighting_distance"
+                    app:layout_constraintVertical_bias="0.384" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+    </ScrollView>
 
     <Button
         android:id="@+id/map_view_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="273dp"
         android:background="@drawable/rounded_background"
         android:fontFamily="sans-serif-medium"
         android:text="@string/map_view"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/cardView"
+        app:layout_constraintBottom_toBottomOf="@+id/searchView"
         app:layout_constraintEnd_toStartOf="@+id/searchView"
-        app:layout_constraintHorizontal_bias="0.195"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
@@ -122,8 +128,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.953"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView"
         app:layout_constraintVertical_bias="0.92" />
 
     <Spinner
@@ -133,10 +137,10 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="7dp"
-        android:layout_marginBottom="272dp"
+        android:layout_marginBottom="0dp"
         android:background="@color/text_box"
         android:entries="@array/dropDown"
-        app:layout_constraintBottom_toTopOf="@+id/cardView"
+        app:layout_constraintBottom_toBottomOf="@+id/searchView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/searchView"
         app:layout_constraintTop_toTopOf="parent" />
@@ -145,16 +149,13 @@
         android:id="@+id/notifications_list_btn"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="185dp"
-        android:layout_marginEnd="232dp"
-        android:layout_marginBottom="16dp"
         android:background="@drawable/rounded_black_btn"
         android:foregroundTint="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/add_sighting"
+        app:srcCompat="@android:drawable/ic_popup_reminder"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView"
-        app:srcCompat="@android:drawable/ic_popup_reminder" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="112dp"
+        tools:layout_editor_absoluteY="474dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

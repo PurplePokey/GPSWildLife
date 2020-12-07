@@ -13,14 +13,6 @@ public class ListView extends AppCompatActivity{
 
     private final AppCompatActivity activity = ListView.this;
 
-    private EditText username;
-    private EditText password;
-    private EditText password2;
-
-
-    private Button create_btn;
-    private Button login_btn;
-
     private ImageView image;
 
     private DBHandler db;
