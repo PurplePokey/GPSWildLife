@@ -1,7 +1,12 @@
 package com.example.wildlifegps;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.text.Layout;
 import android.view.View;
@@ -22,20 +27,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import java.util.Calendar;
 
 public class ListView extends AppCompatActivity{
 
     private final AppCompatActivity activity = ListView.this;
 
-    private ImageView image;
     private LinearLayout cards;
     private Drawable roundBackground;
 
     private DBHandler db;
-
-    private Animal testAnimal;
-    private Sighting testSighting;
+    private LocationManager locManager;
+    private Location currentLoc;
 
     private ArrayList<Sighting> results = new ArrayList<>();
 
@@ -70,6 +76,8 @@ public class ListView extends AppCompatActivity{
 
     private void initObjects(){
         db=new DBHandler(activity);
+
+        //What follows is a bunch of placeholder data, replace it to integrate with db and search
         Calendar[] testCals = new Calendar[3];
         Animal[] testAnims = new Animal[3];
         User[] testUsers = new User[3];
@@ -181,7 +189,7 @@ public class ListView extends AppCompatActivity{
     private View.OnClickListener click = new View.OnClickListener() {
         public void onClick(View view) {
             int id = view.getId();
-            Toast.makeText(getApplicationContext(), "Clicked on sighting #" + id, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "Clicked on sighting #" + id, Toast.LENGTH_SHORT).show();
 
             if(id >= 0 && id < results.size()){
                 Intent i = new Intent(ListView.this, ViewSighting.class);
