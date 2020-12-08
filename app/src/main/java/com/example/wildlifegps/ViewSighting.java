@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +18,8 @@ public class ViewSighting extends AppCompatActivity {
     private TextView userBox;
     private TextView descriptBox;
     private Button learnButton;
+    private TextView identify;
+    private ImageView img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,8 @@ public class ViewSighting extends AppCompatActivity {
         userBox = findViewById(R.id.poster_username);
         descriptBox = findViewById(R.id.sighting_desc);
         learnButton = findViewById(R.id.learn_more_btn);
+        identify = findViewById(R.id.identify_txt);
+        img = findViewById(R.id.sighting_photo);
     }
 
     //create listeners
@@ -63,20 +68,26 @@ public class ViewSighting extends AppCompatActivity {
             commonNameBox.setText(commonName);
             userBox.setText(sighting.getOwner().getUsername());
             descriptBox.setText(sighting.getDescription());
-            if(sighting.getAnimal() instanceof Species){
-                //Species specific display
-                scienceNameBox.setText(((Species) sighting.getAnimal()).getScienceName());
+            //show placeholder image
+            img.setImageResource(R.drawable.fox);
+            if(sighting.getAnimal() != null){
+                identify.setVisibility(View.GONE);
+                if(sighting.getAnimal() instanceof Species){
+                    //Species specific display
+                    scienceNameBox.setText(((Species) sighting.getAnimal()).getScienceName());
+                }
+                else{
+                    //Pet specific display
+                    scienceNameBox.setText(((Pet) sighting.getAnimal()).getPetName());
+                }
+            }
 
-            }
-            else{
-                //Pet specific display
-            }
         }
     }
     private View.OnClickListener learnMore = new View.OnClickListener() {
         public void onClick(View view) {
             Intent i = new Intent(ViewSighting.this, AnimalInformation.class);
-            i.putExtra("Sighting", sighting);
+            i.putExtra("Animal", sighting.getAnimal());
             startActivity(i);
         }
     };
