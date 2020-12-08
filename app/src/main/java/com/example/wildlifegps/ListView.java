@@ -53,6 +53,11 @@ public class ListView extends AppCompatActivity{
         display();
     }
 
+    @Override
+    protected void onStart(){
+        super.onStart();
+    }
+
     private void initViews(){
        // image = findViewById(R.id.animal_image);
         cards = findViewById(R.id.cardView);
@@ -103,6 +108,7 @@ public class ListView extends AppCompatActivity{
 
     private void display(){
         Calendar time = Calendar.getInstance();
+        cards.getChildAt(0).setVisibility(View.GONE);
         for(int i = 0; i < results.size(); i++){
             //Create main container
             LinearLayout bigBox = new LinearLayout(this);
@@ -150,9 +156,6 @@ public class ListView extends AppCompatActivity{
             bigBox.addView(arrow);*/
 
             cards.addView(bigBox);
-
-
-
         }
     }
 

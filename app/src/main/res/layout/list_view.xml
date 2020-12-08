@@ -12,7 +12,6 @@
         android:layout_height="49dp"
         android:layout_marginTop="32dp"
         android:background="@drawable/rounded_background"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,84 +23,76 @@
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:background="@color/colorPrimary"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toTopOf="@+id/notifications_list_btn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView"
-        app:layout_constraintBottom_toTopOf="@+id/notifications_list_btn">
+        app:layout_constraintTop_toBottomOf="@+id/searchView">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardHolder"
+
+        <LinearLayout
+            android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchView">
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/cardView"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/testCard"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@color/colorPrimary"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:background="@drawable/rounded_textbox"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/testCard"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/rounded_textbox"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
+                <ImageView
+                    android:id="@+id/animal_image"
+                    android:layout_width="127dp"
+                    android:layout_height="89dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@tools:sample/avatars" />
 
-                    <ImageView
-                        android:id="@+id/animal_image"
-                        android:layout_width="127dp"
-                        android:layout_height="89dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:srcCompat="@tools:sample/avatars" />
+                <TextView
+                    android:id="@+id/sighting_title"
+                    android:layout_width="76dp"
+                    android:layout_height="wrap_content"
+                    android:text="Species"
+                    android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@id/animal_image"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.181" />
 
-                    <TextView
-                        android:id="@+id/sighting_title"
-                        android:layout_width="76dp"
-                        android:layout_height="wrap_content"
-                        android:text="Species"
-                        android:textColor="@color/common_google_signin_btn_text_dark_focused"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@id/animal_image"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.181" />
+                <TextView
+                    android:id="@+id/sighting_distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text=".1 mi away"
+                    android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                    app:layout_constraintHorizontal_bias="0.529"
+                    app:layout_constraintStart_toEndOf="@id/animal_image"
+                    app:layout_constraintTop_toBottomOf="@+id/sighting_title" />
 
-                    <TextView
-                        android:id="@+id/sighting_distance"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text=".1 mi away"
-                        android:textColor="@color/common_google_signin_btn_text_dark_focused"
-                        app:layout_constraintHorizontal_bias="0.529"
-                        app:layout_constraintStart_toEndOf="@id/animal_image"
-                        app:layout_constraintTop_toBottomOf="@+id/sighting_title" />
-
-                    <TextView
-                        android:id="@+id/sighting_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="23 min ago"
-                        android:textColor="@color/common_google_signin_btn_text_dark_focused"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintHorizontal_bias="0.537"
-                        app:layout_constraintStart_toEndOf="@id/animal_image"
-                        app:layout_constraintTop_toBottomOf="@+id/sighting_distance"
-                        app:layout_constraintVertical_bias="0.384" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+                <TextView
+                    android:id="@+id/sighting_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="23 min ago"
+                    android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHorizontal_bias="0.537"
+                    app:layout_constraintStart_toEndOf="@id/animal_image"
+                    app:layout_constraintTop_toBottomOf="@+id/sighting_distance"
+                    app:layout_constraintVertical_bias="0.384" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
     </ScrollView>
 
     <Button
