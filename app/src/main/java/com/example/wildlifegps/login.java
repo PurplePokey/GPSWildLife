@@ -9,11 +9,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+
 import com.google.android.material.textfield.TextInputEditText;
 
 public class login extends AppCompatActivity implements View.OnClickListener{
 
     private final AppCompatActivity activity = login.this;
+
+
 
     private EditText username;
     private EditText password;
@@ -37,7 +40,7 @@ public class login extends AppCompatActivity implements View.OnClickListener{
 
     }
 
-    private void initViews(){
+    public void initViews(){
         username=(EditText) findViewById(R.id.username_login);
         password = (EditText) findViewById(R.id.password_login);
 
@@ -59,25 +62,7 @@ public class login extends AppCompatActivity implements View.OnClickListener{
 
         //if the login button is pressed
         if(view.getId()==(R.id.login)){
-            //validate fields are filled
-            if(checkInput(username)&& checkInput(password)){
-                //if filled check it matches a data base entry, go to list view
-                if(db.searchUser(username.getText().toString().trim(), password.getText().toString().trim())){
-                    Intent intentListView = new Intent(getApplicationContext(), ListView.class);
-                    startActivity(intentListView);
-                }
-                else{
-                    username.setText(null);
-                    password.setText(null);
-                }
-
-            }
-
-            //else give warning that username or password was invalid
-            else{
-                username.setText(null);
-                password.setText(null);
-            }
+            login();
         }
         //if the register button is pressed
         if(view.getId()==(R.id.register)){
@@ -88,8 +73,33 @@ public class login extends AppCompatActivity implements View.OnClickListener{
 
     }
 
-    private boolean checkInput(EditText text){
-        String value = text.getText().toString().trim();
+    private void login(){
+        //validate fields are filled
+        if(checkInput(username.getText().toString().trim())&& checkInput(password.getText().toString().trim())){
+            //if filled check it matches a data base entry, go to list view
+            if(db.searchUser(username.getText().toString().trim(), password.getText().toString().trim())){
+                String usernameStr =  username.getText().toString().trim();
+                Intent intentListView = new Intent(getApplicationContext(), ListView.class);
+                intentListView.putExtra("user",usernameStr);
+                startActivity(intentListView);
+            }
+            //else popup "username or password was invalid" and clear fields
+            else{
+                username.setText(null);
+                password.setText(null);
+            }
+
+        }
+        //else popup "please fill in all fields"
+        else{
+            username.setText(null);
+            password.setText(null);
+        }
+    }
+
+
+    public boolean checkInput(String value){
+        //String value = text.getText().toString().trim();
         if(value.isEmpty()){
             return false;
         }
@@ -97,4 +107,5 @@ public class login extends AppCompatActivity implements View.OnClickListener{
             return true;
         }
     }
+
 }

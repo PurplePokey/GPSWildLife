@@ -13,6 +13,12 @@ import java.util.Calendar;
 
 public class DBHandler extends SQLiteOpenHelper {
 
+        //For generating IDs
+        public static int sightingIDCount=0;
+        public static int animalIDCount=0;
+        public static int commentIDCount=0;
+        public static int petIDCount=0;
+
         //information of database
         private static final int DATABASE_VERSION = 1;
         private static final String DATABASE_NAME = "WildlifeDB.db";
@@ -128,6 +134,7 @@ public class DBHandler extends SQLiteOpenHelper {
         }
 
         public void addSighting(Sighting sighting){
+            sightingIDCount++;
             SQLiteDatabase db = this.getWritableDatabase();
             int ID=sighting.getID();
             String title=sighting.getTitle();
@@ -147,14 +154,30 @@ public class DBHandler extends SQLiteOpenHelper {
             contentValues.put("sighting_id", ID);
             contentValues.put("longitude", longitude);
             contentValues.put("latitude", latitude);
-            contentValues.put("time", time);
+            contentValues.put("timeStamp", time);
             contentValues.put("title", title);
             contentValues.put("description", description);
-            contentValues.put("filename", filename);
+            contentValues.put("imgFile", filename);
             contentValues.put("flagCount", flagCount);
             contentValues.put("username", username);
 
             db.insert(TABLE_NAME_SIGHTINGS, null, contentValues);
+            db.close();
+
+        }
+
+        public void addAnimal(Animal animal){
+            animalIDCount++;
+            SQLiteDatabase db = this.getWritableDatabase();
+
+            String commName= animal.getCommonName();
+            int id= animal.getAnimalID();
+
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("animal_id", id);
+            contentValues.put("comm_name", commName);
+
+            db.insert(TABLE_NAME_ANIMALS, null, contentValues);
             db.close();
 
         }

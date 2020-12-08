@@ -7,6 +7,10 @@ public class Species extends Animal{
     private String diet;
     private String appearance;
 
+    Species(int animalID, String commonName){
+        super(animalID, commonName);
+    }
+
     Species(int animalID, String commonName, String scienceName, String conserveStatus, String diet, String appearance){
         super(animalID, commonName);
         this.scienceName=scienceName;

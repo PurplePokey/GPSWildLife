@@ -13,7 +13,7 @@
     <string name="map_view">Map View</string>
     <string name="cancel_text">Cancel</string>
     <string name="create_sighting_text">Create Sighting</string>
-    <string name="title_text">Title</string>
+    <string name="title_text">Type of Animal</string>
     <string name="desc_text">Description</string>
     <string name="tag_hint">Enter tags seperated by a space</string>
     <string name="plus">+</string>

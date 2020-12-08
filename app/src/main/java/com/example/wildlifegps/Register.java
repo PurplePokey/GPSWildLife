@@ -70,13 +70,14 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                         db.addUser(user);
                         finish();
                     }
+                    //popup "username is already taken"
                     else{
                         username.setText(null);
                         password.setText(null);
                         password2.setText(null);
                     }
                 }
-
+                // popup "passwords did not match"
                 else{
                     username.setText(null);
                     password.setText(null);
@@ -85,7 +86,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
             }
 
-            //else give warning that username or password was invalid
+            //else popup "please fill in all fields"
             else{
                 username.setText(null);
                 password.setText(null);
