@@ -3,13 +3,16 @@ package com.example.wildlifegps;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -66,6 +69,8 @@ public class ListView extends AppCompatActivity{
         Animal[] testAnims = new Animal[3];
         User[] testUsers = new User[3];
         String[] descripts = new String[3];
+        String[] imgs = new String[3];
+
         for(int i = 0; i < testCals.length; i++){
             testCals[i] = Calendar.getInstance();
         }
@@ -81,6 +86,9 @@ public class ListView extends AppCompatActivity{
         descripts[0] = "This bird flies so fast it scares me";
         descripts[1] = "Found this fox in my backyard!";
         descripts[2] = "BUN BUN";
+        imgs[0] = "hummingbird";
+        imgs[1] = "fox";
+        imgs[2] = "cottontail";
 
         for(int i = 0; i < descripts.length; i++){
             Sighting tmp = new Sighting();
@@ -88,6 +96,7 @@ public class ListView extends AppCompatActivity{
             tmp.setTimestamp(testCals[i]);
             tmp.setAnimal(testAnims[i]);
             tmp.setDescription(descripts[i]);
+            tmp.setImageFileName(imgs[i]);
             results.add(tmp);
         }
     }
@@ -95,15 +104,26 @@ public class ListView extends AppCompatActivity{
     private void display(){
         Calendar time = Calendar.getInstance();
         for(int i = 0; i < results.size(); i++){
+            //Create main container
             LinearLayout bigBox = new LinearLayout(this);
             LayoutParams bigParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
             bigParams.setMargins(50, 50, 50, 50);
             bigBox.setLayoutParams(bigParams);
+            bigBox.setOrientation(LinearLayout.HORIZONTAL);
+            bigBox.setBackground(roundBackground);
             bigBox.setPadding(20, 20, 20, 20);
+            bigBox.setId(i);
+            bigBox.setOnClickListener(click);
+            //Add image
+            ImageView imgBox = new ImageView(this);
+            imgBox.setImageResource(R.drawable.fox);
+            LayoutParams imgParams = new LayoutParams(250, 250);
+            imgBox.setLayoutParams(imgParams);
+            bigBox.addView(imgBox);
 
+            //Add text boxes
             LinearLayout lilBox = new LinearLayout(this);
             lilBox.setOrientation(LinearLayout.VERTICAL);
-            bigBox.setBackground(roundBackground);
             bigBox.addView(lilBox);
             TextView speciesTest = new TextView(this);
             speciesTest.setText(results.get(i).getAnimal().getCommonName());
@@ -116,7 +136,23 @@ public class ListView extends AppCompatActivity{
             tmp = timeElapsed(c, time);
             recencyText.setText(tmp);
             lilBox.addView(recencyText);
+
+            //Add button to view sighting
+            //I figured out how to add the listener to the LinearLayout box, so this is
+            //no longer necessary
+           /* ImageButton arrow = new ImageButton(this);
+            arrow.setImageResource(R.mipmap.forward_white_blue_round);
+            LayoutParams imgParams2 = new LayoutParams(200, 200);
+            imgParams2.setMargins(100, 0, 0, 0);
+            arrow.setLayoutParams(imgParams2);
+            arrow.setId(i);
+            arrow.setOnClickListener(click);
+            bigBox.addView(arrow);*/
+
             cards.addView(bigBox);
+
+
+
         }
     }
 
@@ -141,10 +177,14 @@ public class ListView extends AppCompatActivity{
 
     private View.OnClickListener click = new View.OnClickListener() {
         public void onClick(View view) {
+            int id = view.getId();
+            Toast.makeText(getApplicationContext(), "Clicked on sighting #" + id, Toast.LENGTH_SHORT).show();
 
-            Intent i = new Intent(ListView.this, ViewSighting.class);
-            i.putExtra("Sighting", results.get(0));
-            startActivity(i);
+            if(id >= 0 && id < results.size()){
+                Intent i = new Intent(ListView.this, ViewSighting.class);
+                i.putExtra("Sighting", results.get(id));
+                startActivity(i);
+            }
         }
     };
 
