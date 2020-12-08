@@ -12,14 +12,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.junit.Test;
-
 import java.io.Serializable;
-import java.sql.Connection;
 import java.util.List;
-
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNull;
 
 public class deleteSighting extends AppCompatActivity implements View.OnClickListener {
 
@@ -28,6 +22,7 @@ public class deleteSighting extends AppCompatActivity implements View.OnClickLis
     private Button b;
     private DBHandler dbh;
     private Sighting sighting;
+    private List<Sighting> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +35,6 @@ public class deleteSighting extends AppCompatActivity implements View.OnClickLis
         initViews();
         initListeners();
         initObjects();
-
     }
 
     private void initViews(){
@@ -48,7 +42,7 @@ public class deleteSighting extends AppCompatActivity implements View.OnClickLis
     }
 
     private void initListeners(){
-        b.setOnClickListener((View.OnClickListener) this);
+        b.setOnClickListener(this);
     }
 
     private void initObjects(){
@@ -57,13 +51,16 @@ public class deleteSighting extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
-        if(view.getId()==(R.id.login)){
+
+        if(view.getId()==(R.id.delete_sighting)){
             dbh.deleteSighting(sighting);
 
             Toast.makeText(activity, "Sighting Successfully Deleted", Toast.LENGTH_LONG).show();
 
+            list = dbh.filterByTime();
+
             Intent intentDelete = new Intent(getApplicationContext(), ListView.class);
-            intentDelete.putExtra("Sighting", (Serializable) sighting);
+            intentDelete.putExtra("deletedSightingList", (Serializable) list);
             startActivity(intentDelete);
 
         }

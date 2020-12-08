@@ -14,7 +14,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class addComment extends AppCompatActivity implements Serializable {
+public class addComment extends AppCompatActivity implements View.OnClickListener {
 
     private final addComment activity = addComment.this;
 
@@ -30,34 +30,50 @@ public class addComment extends AppCompatActivity implements Serializable {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sighting_view);
 
+        getSupportActionBar().hide();
+
+        initViews();
+        initListeners();
+        initObjects();
+
+    }
+
+    public void initViews() {
         b = (Button)findViewById(R.id.post_comment);
         box = (TextInputEditText)findViewById(R.id.comment_textbox);
+    }
+
+    public void initListeners() {
+        b.setOnClickListener(this);
+    }
+
+    public void initObjects() {
         dbh = new DBHandler(activity);
+    }
 
-        b.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
 
-            @Override
-            public void onClick(View v) {
-                if(!box.getText().toString().matches(""))
-                {
-                    // not null not empty
-                    final String content = box.getText().toString();
-                    Comment comment = new Comment();
-                    comment.setComment(content);
-                    commentArr = sighting.getComments();
-                    commentArr.add(comment);
-                    sighting.setComments(commentArr);
-                    dbh.addComment(comment);
-                    Toast.makeText(activity, "Comment added!", Toast.LENGTH_LONG).show();
-                }
-                else {
-                    //null or empty
-                    Toast.makeText(activity, "Enter text to make a comment", Toast.LENGTH_LONG).show();
-                }
-
+        if(view.getId()==(R.id.post_comment)){
+            if(!box.getText().toString().equals("")) {
+                // not null not empty
+                final String content = box.getText().toString();
+                Comment comment = new Comment();
+                comment.setComment(content);
+                commentArr = sighting.getComments();
+                commentArr.add(comment);
+                sighting.setComments(commentArr);
+                dbh.addComment(comment);
+                Toast.makeText(activity, "Comment added!", Toast.LENGTH_LONG).show();
                 Intent intentAddComment = new Intent(getApplicationContext(), Sighting.class);
+                intentAddComment.putExtra("commentedSighting", (Serializable) sighting);
                 startActivity(intentAddComment);
             }
-        });
+            else {
+                //null or empty
+                Toast.makeText(activity, "Enter text to make a comment", Toast.LENGTH_LONG).show();
+            }
+
+        }
     }
 }

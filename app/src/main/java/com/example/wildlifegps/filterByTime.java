@@ -6,6 +6,7 @@ import android.os.Parcelable;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class filterByTime extends AppCompatActivity {
@@ -25,7 +26,7 @@ public class filterByTime extends AppCompatActivity {
         arrayList = db.filterByTime();
 
         Intent intentFilterByTime = new Intent(getApplicationContext(), Sighting.class);
-        intentFilterByTime.putExtra("List of Sightings", (Parcelable) arrayList);
+        intentFilterByTime.putExtra("filteredList", (Serializable) arrayList);
         startActivity(intentFilterByTime);
     }
 
