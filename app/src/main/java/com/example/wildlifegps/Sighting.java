@@ -14,7 +14,7 @@ public class Sighting {
     private Location location;
     private Calendar timestamp;
     private String description;
-    private String imageFileName;
+    private byte imageFileName[];
     private int flagCount;
     private ArrayList<String> tags = new ArrayList<>();
     private ArrayList<Comment> comments = new ArrayList<>();
@@ -67,11 +67,11 @@ public class Sighting {
         this.description = description;
     }
 
-    public String getImageFileName() {
+    public byte[] getImageFileName() {
         return imageFileName;
     }
 
-    public void setImageFileName(String imageFileName) {
+    public void setImageFileName(byte[] imageFileName) {
         this.imageFileName = imageFileName;
     }
 

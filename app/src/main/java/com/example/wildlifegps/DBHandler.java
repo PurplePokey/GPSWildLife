@@ -51,7 +51,7 @@ public class DBHandler extends SQLiteOpenHelper {
                     +"timeStamp varchar(20),"
                     +"title varchar(100),"
                     +"description varchar(280),"
-                    +"imgFile varchar(100),"
+                    +"imgFile blob,"
                     +"flagCount int DEFAULT 0,"
                     +"username varchar(30) not null,"
                     +"animal_id int,"
@@ -147,7 +147,7 @@ public class DBHandler extends SQLiteOpenHelper {
                     ":" + timestamp.get(Calendar.DAY_OF_MONTH) + ":" + timestamp.get(Calendar.YEAR);
             int flagCount = sighting.getFlagCount();
             String description = sighting.getDescription();
-            String filename = sighting.getImageFileName();
+            byte[] filename = sighting.getImageFileName();
             String username = sighting.getOwner().getUsername();
             int aniID = sighting.getAnimal().getAnimalID();
 
@@ -352,7 +352,9 @@ public class DBHandler extends SQLiteOpenHelper {
                 temp.setTimestamp(cal);
                 temp.setTitle(cursor.getString(4));
                 temp.setDescription(cursor.getString(5));
-                temp.setImageFileName(cursor.getString(6));
+                String image = (cursor.getString(6));
+                byte[] imgArr=image.getBytes();
+                temp.setImageFileName(imgArr);
                 temp.setFlagCount(Integer.parseInt(cursor.getString(7)));
                 //temp.getTags();
                 username=(cursor.getString(8));
@@ -390,7 +392,9 @@ public class DBHandler extends SQLiteOpenHelper {
                 temp.setTimestamp(cal);
                 temp.setTitle(cursor.getString(4));
                 temp.setDescription(cursor.getString(5));
-                temp.setImageFileName(cursor.getString(6));
+                String image = (cursor.getString(6));
+                byte[] imgArr=image.getBytes();
+                temp.setImageFileName(imgArr);
                 temp.setFlagCount(Integer.parseInt(cursor.getString(7)));
                 //temp.getTags();
                 username=(cursor.getString(8));
@@ -426,7 +430,9 @@ public class DBHandler extends SQLiteOpenHelper {
                 temp.setTimestamp(cal);
                 temp.setTitle(cursor.getString(4));
                 temp.setDescription(cursor.getString(5));
-                temp.setImageFileName(cursor.getString(6));
+                String image = (cursor.getString(6));
+                byte[] imgArr=image.getBytes();
+                temp.setImageFileName(imgArr);
                 temp.setFlagCount(Integer.parseInt(cursor.getString(7)));
                 //temp.getTags();
                 username=(cursor.getString(8));
