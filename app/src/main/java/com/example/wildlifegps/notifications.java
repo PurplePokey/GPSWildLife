@@ -36,7 +36,8 @@ public class notifications extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notifications);
-
+        updateLocation();
+        compareLocation();
 
 
         // Finds the subscribe button from the xml layout file
@@ -119,6 +120,7 @@ public class notifications extends AppCompatActivity {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,100,1, mylistener);
             if(locationManager!=null){
                 location=locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                compareLocation();
             }
         }
     }
@@ -127,21 +129,26 @@ public class notifications extends AppCompatActivity {
     //What will compare current location to sighting locations
         //still need loop to constantly loop through updateLocation?
         //still need to find way to compare to many sightings : loop through list of sightings?
-    private void compareLocation(){
-        updateLocation();
+
+
+    private void compareLocation() {
+        //updateLocation();
         //check sighting
-        if(location == sighting_variable.getLocation()){
-            //check if user is subscribed for notifications
-            if(Subscribed == true) {
-                //suppress notification at selected locations
-                for(int i = 0 ; i>listOfLocations.length; i++){
-                    if(location != listOfLocations[i]){
-                        warnNotification();
+        if(location !=null && sighting_variable.getLocation() !=null) {
+            if (location == sighting_variable.getLocation()) {
+                //check if user is subscribed for notifications
+                if (Subscribed == true) {
+                    //suppress notification at selected locations
+                    for (int i = 0; i > listOfLocations.length; i++) {
+                        if (location != listOfLocations[i]) {
+                            warnNotification();
+                        }
                     }
                 }
             }
         }
     }
+
 
 
 
