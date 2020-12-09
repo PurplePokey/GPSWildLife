@@ -95,10 +95,10 @@ public class ListView extends AppCompatActivity{
                 currentLoc=locManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
             }
             if(currentLoc!=null){
-             //   Toast.makeText(getApplicationContext(), "Location: " + currentLoc.toString(), Toast.LENGTH_SHORT).show();
+                //   Toast.makeText(getApplicationContext(), "Location: " + currentLoc.toString(), Toast.LENGTH_SHORT).show();
             }
             else{
-            //    Toast.makeText(getApplicationContext(), "No location found", Toast.LENGTH_SHORT).show();
+                //    Toast.makeText(getApplicationContext(), "No location found", Toast.LENGTH_SHORT).show();
             }
 
         }
@@ -126,55 +126,62 @@ public class ListView extends AppCompatActivity{
     }
     private void initObjects(){
         db=new DBHandler(activity);
-
+        results = (ArrayList<Sighting>) getIntent().getSerializableExtra("Sighting");
         //What follows is a bunch of placeholder data, replace it to integrate with db and search
-        Calendar[] testCals = new Calendar[3];
-        Animal[] testAnims = new Animal[3];
-        User[] testUsers = new User[3];
-        String[] descripts = new String[3];
-        String[] imgs = new String[3];
-        Location[] locs = new Location[3];
 
-        for(int i = 0; i < testCals.length; i++){
-            testCals[i] = Calendar.getInstance();
+        list = db.filterByTime();
+
+        if(results == null || results.size() == 0){
+            results = new ArrayList<Sighting>();
+            Calendar[] testCals = new Calendar[3];
+            Animal[] testAnims = new Animal[3];
+            User[] testUsers = new User[3];
+            String[] descripts = new String[3];
+            String[] imgs = new String[3];
+            Location[] locs = new Location[3];
+
+            for(int i = 0; i < testCals.length; i++){
+                testCals[i] = Calendar.getInstance();
+            }
+            testCals[0].set(2020, 11, 7, 2, 4);
+            testCals[1].set(2020, 11, 5, 14, 30);
+            testCals[2].set(2019, 3, 5, 7, 28);
+            testAnims[0] = new Species(1, "Hummingbird", "Archilochus colubris", "LC", "nectar", "cute");
+            testAnims[1] = new Species(2, "Fox", "Vulpes vulpes", "LC", "rodents", "red");
+            testAnims[2] = new Species(3, "Cottontail", "Sylvilagus floridanus", "LC", "your garden", "bunny");
+            testUsers[0] = new User("FakeUser", "extra fake");
+            testUsers[1] = new User("Greg", "boop");
+            testUsers[2] = new User("Bob", "bobbo");
+            descripts[0] = "This bird flies so fast it scares me";
+            descripts[1] = "Found this fox in my backyard!";
+            descripts[2] = "BUN BUN";
+            imgs[0] = "hummingbird";
+            imgs[1] = "fox";
+            imgs[2] = "cottontail";
+            locs[0] = new Location("");
+            locs[0].setLatitude(42.9);
+            locs[0].setLongitude(-87.7);
+
+            locs[1] = new Location("");
+            locs[1].setLatitude(40);
+            locs[1].setLongitude(-80);
+
+            locs[2] = new Location("");
+            locs[2].setLatitude(35.5);
+            locs[2].setLongitude(-85.3);
+
+            for(int i = 0; i < descripts.length; i++){
+                Sighting tmp = new Sighting();
+                tmp.setOwner(testUsers[i]);
+                tmp.setTimestamp(testCals[i]);
+                tmp.setAnimal(testAnims[i]);
+                tmp.setDescription(descripts[i]);
+                // tmp.setImageFileName(imgs[i]);
+                tmp.setLocation(locs[i]);
+                results.add(tmp);
+            }
         }
-        testCals[0].set(2020, 11, 7, 2, 4);
-        testCals[1].set(2020, 11, 5, 14, 30);
-        testCals[2].set(2019, 3, 5, 7, 28);
-        testAnims[0] = new Species(1, "Hummingbird", "Archilochus colubris", "LC", "nectar", "cute");
-        testAnims[1] = new Species(2, "Fox", "Vulpes vulpes", "LC", "rodents", "red");
-        testAnims[2] = new Species(3, "Cottontail", "Sylvilagus floridanus", "LC", "your garden", "bunny");
-        testUsers[0] = new User("FakeUser", "extra fake");
-        testUsers[1] = new User("Greg", "boop");
-        testUsers[2] = new User("Bob", "bobbo");
-        descripts[0] = "This bird flies so fast it scares me";
-        descripts[1] = "Found this fox in my backyard!";
-        descripts[2] = "BUN BUN";
-        imgs[0] = "hummingbird";
-        imgs[1] = "fox";
-        imgs[2] = "cottontail";
-        locs[0] = new Location("");
-        locs[0].setLatitude(42.9);
-        locs[0].setLongitude(-87.7);
 
-        locs[1] = new Location("");
-        locs[1].setLatitude(40);
-        locs[1].setLongitude(-80);
-
-        locs[2] = new Location("");
-        locs[2].setLatitude(35.5);
-        locs[2].setLongitude(-85.3);
-
-        for(int i = 0; i < descripts.length; i++){
-            Sighting tmp = new Sighting();
-            tmp.setOwner(testUsers[i]);
-            tmp.setTimestamp(testCals[i]);
-            tmp.setAnimal(testAnims[i]);
-            tmp.setDescription(descripts[i]);
-           // tmp.setImageFileName(imgs[i]);
-            tmp.setLocation(locs[i]);
-            results.add(tmp);
-        }
     }
 
     private void display(){
@@ -379,7 +386,7 @@ public class ListView extends AppCompatActivity{
         @Override
         public void onLocationChanged(Location location){
             currentLoc = location;
-           // Toast.makeText(getApplicationContext(), "Location changed: " + currentLoc.toString(), Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getApplicationContext(), "Location changed: " + currentLoc.toString(), Toast.LENGTH_SHORT).show();
             recalculateDistances();
         }
         @Override
