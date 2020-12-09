@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,12 +27,16 @@ public class notifications extends AppCompatActivity {
     private double latitude;
     private double longitude;
     private Location location;
+    Sighting sighting_variable = new Sighting();
+    //suppress these locations:
+    private Location listOfLocations[] ={};
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notifications);
+
 
 
         // Finds the subscribe button from the xml layout file
@@ -100,7 +103,7 @@ public class notifications extends AppCompatActivity {
             }
         });
     }
-    
+
     private void updateLocation(){
         mylistener = new MyLocationListener();
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -120,19 +123,26 @@ public class notifications extends AppCompatActivity {
         }
     }
 
-    /*
+
     //What will compare current location to sighting locations
         //still need loop to constantly loop through updateLocation?
         //still need to find way to compare to many sightings : loop through list of sightings?
     private void compareLocation(){
         updateLocation();
+        //check sighting
         if(location == sighting_variable.getLocation()){
+            //check if user is subscribed for notifications
             if(Subscribed == true) {
-                warnNotification();
+                //suppress notification at selected locations
+                for(int i = 0 ; i>listOfLocations.length; i++){
+                    if(location != listOfLocations[i]){
+                        warnNotification();
+                    }
+                }
             }
         }
     }
-     */
+
 
 
     private class MyLocationListener implements LocationListener{
@@ -157,8 +167,8 @@ public class notifications extends AppCompatActivity {
         // Builds your notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher_round)
-                .setContentTitle("Watch out, You're about to be eaten!")
-                .setContentText("There is a(n) Animal[Object] Near your location.");
+                .setContentTitle("Look around there was a sighting in your area!")
+                .setContentText("There is a(n) "+sighting_variable.getAnimal()+" near your location.");
 
         // Creates the intent needed to show the notification
         Intent notificationIntent = new Intent(this, notifications.class);
