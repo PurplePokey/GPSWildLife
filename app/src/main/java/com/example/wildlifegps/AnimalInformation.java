@@ -4,6 +4,11 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
+
+import java.util.ArrayList;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class AnimalInformation extends AppCompatActivity {
@@ -13,6 +18,7 @@ public class AnimalInformation extends AppCompatActivity {
     private TextView diet;
     private TextView appearance;
     private TextView stat;
+    private LineChart mChart;
     Animal animal;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +41,7 @@ public class AnimalInformation extends AppCompatActivity {
         diet = findViewById(R.id.diet_info);
         stat = findViewById(R.id.status_info);
         appearance = findViewById(R.id.appearance_info);
+        mChart = findViewById(R.id.chart);
     }
     private void initListeners(){
 
@@ -51,5 +58,9 @@ public class AnimalInformation extends AppCompatActivity {
         else{
             Toast.makeText(getApplicationContext(), "Error: unexpected input", Toast.LENGTH_LONG).show();
         }
+        createChart();
+    }
+    private void createChart(){
+        ArrayList<Entry> values = new ArrayList<>();
     }
 }

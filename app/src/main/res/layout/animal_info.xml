@@ -131,7 +131,10 @@
                 android:text="@string/sighting_history_str"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textSize="20sp" />
-
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/chart"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"/>
         </LinearLayout>
     </ScrollView>
 
