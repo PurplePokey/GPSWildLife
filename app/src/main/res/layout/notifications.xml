@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -20,36 +19,54 @@
         android:id="@+id/unsubButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:layout_marginBottom="638dp"
         android:text="Unsubscribe"
         android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="45dp"
+        app:layout_constraintTop_toTopOf="parent"
         tools:visibility="invisible" />
 
     <Button
         android:id="@+id/buttonWarn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="37dp"
+        android:layout_marginStart="38dp"
+        android:layout_marginTop="128dp"
+        android:layout_marginEnd="285dp"
+        android:layout_marginBottom="555dp"
         android:text="Warning"
-        app:layout_constraintBottom_toTopOf="@+id/buttonFound"
-        tools:layout_editor_absoluteX="38dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/buttonFound"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="38dp"
+        android:layout_marginEnd="275dp"
+        android:layout_marginBottom="470dp"
         android:text="Found Pet"
-        tools:layout_editor_absoluteX="38dp"
-        tools:layout_editor_absoluteY="213dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textLocation"
         android:layout_width="202dp"
         android:layout_height="72dp"
+        android:layout_marginStart="38dp"
+        android:layout_marginTop="294dp"
+        android:layout_marginEnd="171dp"
+        android:layout_marginBottom="365dp"
         android:text="Location"
-        tools:layout_editor_absoluteX="38dp"
-        tools:layout_editor_absoluteY="294dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

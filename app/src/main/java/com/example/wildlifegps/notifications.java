@@ -6,10 +6,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -19,63 +15,34 @@ import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.lang.Object;
-
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 public class notifications extends AppCompatActivity {
     boolean Subscribed;
-    //Location managers
-    private LocationManager locationManager;
-    private LocationListener locationListener;
-    //Sensor Managers
-    private SensorManager sensorManager;
-    private Sensor proximitySensor;
-    private SensorEventListener proximitySensorListener;
 
-    TextView t = findViewById(R.id.textLocation);
+    private LocationManager locationManager;
+    private MyLocationListener mylistener;
+    private double latitude;
+    private double longitude;
+    private Location location;
+
+    //TextView t = findViewById(R.id.textLocation);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notifications);
-        //Sensor
-        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
 
-        if(proximitySensor == null){
-            Toast.makeText(this, "Proximity sensor is not available", Toast.LENGTH_LONG).show();
-            finish();
-        }
-
-        proximitySensorListener = new SensorEventListener() {
-            @Override
-            public void onSensorChanged(SensorEvent event) {
-                if (event.values[0] < proximitySensor.getMaximumRange()){
-                    if(Subscribed == true) {
-                        warnNotification();
-                        LocationUpdate();
-                    }
-                }else{
-                    //nothing
-                }
-            }
-
-            @Override
-            public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-            }
-        };
-        sensorManager.registerListener(proximitySensorListener,proximitySensor,
-                2 * 1000 * 1000);
 
         //Location
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        locationListener = new LocationListener() {
+        //Location managers
+        /*
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        LocationListener locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
                 t.append("\n " + location.getLongitude() + " " + location.getLatitude());
@@ -98,6 +65,8 @@ public class notifications extends AppCompatActivity {
                 startActivity(i);
             }
         };
+
+        */
 
         // Finds the subscribe button from the xml layout file
         final Button SubNotificationButton = findViewById(R.id.subButton);
@@ -146,7 +115,7 @@ public class notifications extends AppCompatActivity {
                 // Starts the function below
                 if(Subscribed == true) {
                     warnNotification();
-                    LocationUpdate();
+                    //LocationUpdate();
 
                 }
             }
@@ -163,13 +132,8 @@ public class notifications extends AppCompatActivity {
             }
         });
     }
-    //more of the proximity Sensor
-    @Override
-    protected void onPause(){
-        super.onPause();
-        sensorManager.unregisterListener(proximitySensorListener);
-    }
 
+    /*
     void LocationUpdate(){
         // first check for permissions
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -182,6 +146,53 @@ public class notifications extends AppCompatActivity {
         //noinspection MissingPermission
         //locationManager.requestLocationUpdates("gps", 5000, 0, LocationListener);
 
+    }
+    */
+    private void updateLocation(){
+        mylistener = new MyLocationListener();
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)){
+
+            }
+            else{
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 11);
+            }
+        }
+        else{
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,100,1, mylistener);
+            if(locationManager!=null){
+                location=locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            }
+        }
+    }
+
+    /*
+    private void compareLocation(){
+        updateLocation();
+        if(location == sighting_variable.getLocation()){
+            if(Subscribed == true) {
+                warnNotification();
+            }
+        }
+    }
+    */
+
+    private class MyLocationListener implements LocationListener{
+        @Override
+        public void onLocationChanged(Location location){
+            latitude=location.getLatitude();
+            longitude= location.getLongitude();
+        }
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras){
+        }
+        @Override
+        public void onProviderEnabled(String provider){
+        }
+        @Override
+        public void onProviderDisabled(String provider){
+        }
     }
 
     // Creates and displays a warning notification
@@ -219,4 +230,5 @@ public class notifications extends AppCompatActivity {
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         manager.notify(0, builder.build());
     }
+
 }
