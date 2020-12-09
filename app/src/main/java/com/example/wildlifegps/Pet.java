@@ -7,11 +7,14 @@ public class Pet extends Animal{
     //0 for lost 1 for found
     private int lostFound;
 
+
     Pet(int animalID, String commonName, int petID, String petName){
         super(animalID, commonName);
         this.petID=petID;
         this.petName=petName;
-    }
+   }
+
+    Pet(int animalID, String commonName){ super(animalID, commonName); }
 
     public int getPetID() {
         return petID;
