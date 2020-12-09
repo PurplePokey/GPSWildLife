@@ -3,110 +3,70 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/text_box">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="412dp"
-        android:layout_height="91dp"
-        android:layout_marginStart="1dp"
-        android:background="@color/colorPrimary"
-        android:gravity="center_vertical"
-        android:inputType="textMultiLine"
-        android:text="@string/notifications_header_str"
-        android:textAlignment="textEnd"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@color/colorAccent"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/notification_text"
+    <Button
+        android:id="@+id/subButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="35dp"
+        android:text="Subscribe"
+        app:layout_constraintBottom_toTopOf="@+id/buttonWarn"
+        app:layout_constraintEnd_toStartOf="@+id/unsubButton" />
+
+    <Button
+        android:id="@+id/unsubButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:layout_marginBottom="638dp"
+        android:text="Unsubscribe"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="invisible" />
+
+    <Button
+        android:id="@+id/buttonWarn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="38dp"
+        android:layout_marginTop="128dp"
+        android:layout_marginEnd="285dp"
+        android:layout_marginBottom="555dp"
+        android:text="Warning"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/notification_back_btn"
-        android:layout_width="64dp"
-        android:layout_height="55dp"
-        android:layout_marginEnd="332dp"
-        android:background="#00000000"
-        app:layout_constraintBottom_toTopOf="@+id/notification_text"
-        app:layout_constraintEnd_toEndOf="@+id/textView"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_revert" />
-
-    <TextView
-        android:id="@+id/notification_text"
-        android:layout_width="408dp"
-        android:layout_height="103dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/colorAccent"
-        android:gravity="center_vertical"
-        android:text="@string/notification_str"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textColor="@color/common_google_signin_btn_text_dark_focused"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/notification_switch"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <Switch
-        android:id="@+id/notification_switch"
-        android:layout_width="50dp"
-        android:layout_height="51dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="464dp"
-        android:switchTextAppearance="@style/TextAppearance.AppCompat.Display1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/text_on"
-        app:layout_constraintStart_toEndOf="@+id/text_off"
-        app:layout_constraintTop_toBottomOf="@+id/notification_text" />
-
-    <TextView
-        android:id="@+id/text_off"
-        android:layout_width="41dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="110dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="419dp"
-        android:text="@string/off_str"
-        android:textAlignment="center"
-        android:textColor="@color/common_google_signin_btn_text_dark_focused"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/notification_switch"
-        app:layout_constraintHorizontal_bias="0.58"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/notification_text"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/text_on"
-        android:layout_width="47dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="110dp"
-        android:layout_marginBottom="419dp"
-        android:text="@string/on_str"
-        android:textAlignment="center"
-        android:textColor="@color/common_google_signin_btn_text_dark_focused"
-        android:textSize="18sp"
+    <Button
+        android:id="@+id/buttonFound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="38dp"
+        android:layout_marginEnd="275dp"
+        android:layout_marginBottom="470dp"
+        android:text="Found Pet"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/notification_switch"
-        app:layout_constraintTop_toBottomOf="@+id/notification_text"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintStart_toStartOf="parent" />
 
+    <TextView
+        android:id="@+id/textLocation"
+        android:layout_width="202dp"
+        android:layout_height="72dp"
+        android:layout_marginStart="38dp"
+        android:layout_marginTop="294dp"
+        android:layout_marginEnd="171dp"
+        android:layout_marginBottom="365dp"
+        android:text="Location"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
