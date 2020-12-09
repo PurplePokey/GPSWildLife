@@ -32,6 +32,8 @@ public class ViewSighting extends AppCompatActivity {
     private Button delete;
     private Button updateButton;
     private Button backButton;
+    private Button stillHere;
+    private Button moved;
     private TextView identify;
     private ImageView img;
     private ArrayList<Sighting> list;
@@ -69,6 +71,8 @@ public class ViewSighting extends AppCompatActivity {
         delete= findViewById(R.id.delete_sighting);
         updateButton = findViewById(R.id.updateSightingBtn);
         backButton = findViewById(R.id.sighting_back_button);
+        stillHere = (Button) findViewById(R.id.animal_there_btn);
+        moved= (Button) findViewById(R.id.animal_gone_btn);
 
     }
 
@@ -151,6 +155,22 @@ public class ViewSighting extends AppCompatActivity {
                 Intent intentDelete = new Intent(getApplicationContext(), ListView.class);
                 intentDelete.putExtra("deletedSightingList", (Serializable) list);
                 startActivity(intentDelete);
+
+            }
+        }
+    };
+    private View.OnClickListener animalStillHere = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if(view.getId()==(R.id.animal_there_btn)){
+
+            }
+        }
+    };
+    private View.OnClickListener animalMoved = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if(view.getId()==(R.id.animal_gone_btn)){
 
             }
         }

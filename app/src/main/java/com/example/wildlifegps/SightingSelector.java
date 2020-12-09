@@ -71,7 +71,10 @@ public class SightingSelector extends AppCompatActivity implements View.OnClickL
         }
         //if the lost pet button is pressed
         if(view.getId()==(R.id.found_pet_btn)){
-
+            Intent intentAddFoundPet = new Intent(getApplicationContext(), FoundPet.class);
+            intentAddFoundPet.putExtra("user", user);
+            startActivity(intentAddFoundPet);
+            finish();
         }
 
     }

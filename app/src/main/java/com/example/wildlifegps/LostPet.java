@@ -79,7 +79,7 @@ public class LostPet extends AppCompatActivity implements View.OnClickListener {
         type=(EditText) findViewById(R.id.type_pet_lost);
         name = (EditText) findViewById(R.id.name_pet_lost);
         desc = (EditText) findViewById(R.id.desc_pet_lost);
-        upload=(Button) findViewById(R.id.upload_image);
+        upload=(Button) findViewById(R.id.upload_lost);
         cancel = (Button) findViewById(R.id.cancel_pet_lost);
         create= (Button) findViewById(R.id.create_pet_lost);
     }
