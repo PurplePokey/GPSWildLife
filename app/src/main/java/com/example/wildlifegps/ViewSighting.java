@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import static com.example.wildlifegps.R.id.flag_sighting;
+
 public class ViewSighting extends AppCompatActivity {
 
     private Sighting sighting = null;
@@ -20,6 +22,11 @@ public class ViewSighting extends AppCompatActivity {
     private Button learnButton;
     private TextView identify;
     private ImageView img;
+    private Button flag_sighting;
+
+    private DBHandler db;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +40,8 @@ public class ViewSighting extends AppCompatActivity {
         initListeners();
         display();
     }
+
+
 
     //Get sighting from intent
     private void initObjects(){
@@ -48,6 +57,7 @@ public class ViewSighting extends AppCompatActivity {
         learnButton = findViewById(R.id.learn_more_btn);
         identify = findViewById(R.id.identify_txt);
         img = findViewById(R.id.sighting_photo);
+        flag_sighting = findViewById(R.id.flag_sighting);
     }
 
     //create listeners
@@ -58,6 +68,8 @@ public class ViewSighting extends AppCompatActivity {
         else{
             learnButton.setVisibility(View.INVISIBLE);
         }
+
+        flag_sighting.setOnClickListener((View.OnClickListener) this);
     }
 
     //set view objects to show sighting info rather than placeholders
@@ -84,11 +96,24 @@ public class ViewSighting extends AppCompatActivity {
 
         }
     }
-    private View.OnClickListener learnMore = new View.OnClickListener() {
+    private final View.OnClickListener learnMore = new View.OnClickListener() {
         public void onClick(View view) {
             Intent i = new Intent(ViewSighting.this, AnimalInformation.class);
             i.putExtra("Animal", sighting.getAnimal());
             startActivity(i);
+
+            //Flag Count starts here
+            if(view.getId()==(R.id.flag_sighting))
+            {
+                int count = sighting.getFlagCount();
+                count++;
+                sighting.setFlagCount(count);
+                db.updateFlagCount(sighting);
+            }
         }
     };
+
+
+
 }
+
