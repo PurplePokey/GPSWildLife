@@ -13,11 +13,15 @@ import androidx.appcompat.app.AppCompatActivity;
 public class ViewSighting extends AppCompatActivity {
 
     private Sighting sighting = null;
+    private String user = "";
     private TextView commonNameBox;
     private TextView scienceNameBox;
     private TextView userBox;
     private TextView descriptBox;
     private Button learnButton;
+    private Button deleteButton;
+    private Button updateButton;
+    private Button backButton;
     private TextView identify;
     private ImageView img;
 
@@ -37,6 +41,7 @@ public class ViewSighting extends AppCompatActivity {
     //Get sighting from intent
     private void initObjects(){
         sighting = (Sighting) getIntent().getSerializableExtra("Sighting");
+        user = getIntent().getStringExtra("user");
     }
 
     //initialize view objects
@@ -48,10 +53,14 @@ public class ViewSighting extends AppCompatActivity {
         learnButton = findViewById(R.id.learn_more_btn);
         identify = findViewById(R.id.identify_txt);
         img = findViewById(R.id.sighting_photo);
+        deleteButton = findViewById(R.id.delete_sighting);
+        updateButton = findViewById(R.id.updateSightingBtn);
+        backButton = findViewById(R.id.sighting_back_button);
     }
 
     //create listeners
     private void initListeners(){
+        backButton.setOnClickListener(goBack);
         if(sighting != null && sighting.getAnimal() instanceof Species){
             learnButton.setOnClickListener(learnMore);
         }
@@ -62,6 +71,10 @@ public class ViewSighting extends AppCompatActivity {
 
     //set view objects to show sighting info rather than placeholders
     private void display(){
+        if(!user.equals(sighting.getOwner().getUsername())){
+            deleteButton.setVisibility(View.GONE);
+            updateButton.setVisibility(View.GONE);
+        }
         if(sighting != null){
             //Common display
             String commonName = sighting.getAnimal().getCommonName();
@@ -81,9 +94,18 @@ public class ViewSighting extends AppCompatActivity {
                     scienceNameBox.setText(((Pet) sighting.getAnimal()).getPetName());
                 }
             }
-
+            else{
+                commonNameBox.setText("Unknown");
+                scienceNameBox.setVisibility(View.GONE);
+            }
         }
     }
+    private View.OnClickListener goBack = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            finish();
+        }
+    };
     private View.OnClickListener learnMore = new View.OnClickListener() {
         public void onClick(View view) {
             Intent i = new Intent(ViewSighting.this, AnimalInformation.class);

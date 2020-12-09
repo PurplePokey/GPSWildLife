@@ -225,6 +225,7 @@ public class ListView extends AppCompatActivity{
             if(id >= 0 && id < results.size()){
                 Intent i = new Intent(ListView.this, ViewSighting.class);
                 i.putExtra("Sighting", results.get(id));
+                i.putExtra("user", user);
                 startActivity(i);
             }
         }
