@@ -2,16 +2,16 @@ package com.example.wildlifegps;
 
 import android.location.Location;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class Sighting {
+public class Sighting implements Serializable {
     private String title;
     private int ID;
     private User owner;
     private Animal animal;
-    //private String location;
-    private Location location;
+    private SerialLoc location;
     private Calendar timestamp;
     private String description;
     private byte imageFileName[];
@@ -19,6 +19,9 @@ public class Sighting {
     private ArrayList<String> tags = new ArrayList<>();
     private ArrayList<Comment> comments = new ArrayList<>();
 
+    public Sighting(){
+
+    }
     public Animal getAnimal() {
         return animal;
     }
@@ -44,11 +47,11 @@ public class Sighting {
     }
 
     public Location getLocation() {
-        return location;
+        return location.toRealLoc();
     }
 
     public void setLocation(Location location) {
-        this.location = location;
+        this.location = new SerialLoc(location.getLatitude(), location.getLongitude());
     }
 
     public Calendar getTimestamp() {

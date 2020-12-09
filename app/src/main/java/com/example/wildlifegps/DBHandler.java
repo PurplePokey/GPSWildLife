@@ -478,6 +478,26 @@ public class DBHandler extends SQLiteOpenHelper {
             }
         }
 
+        public int getDailySightingCount(int animalID, Calendar c){
+            SQLiteDatabase db = this.getWritableDatabase();
+            //Convert calendar to date in format MM/DD/YYYY
+            String date = c.get(Calendar.MONTH) + "/" + c.get(Calendar.DAY_OF_MONTH) + "/" + c.get(Calendar.YEAR);
+            //Look for sightings that include %MM/DD/YYYY% and have same animal id
+            Cursor cursor = db.rawQuery("SELECT COUNT(sighting_id) FROM "
+                    + TABLE_NAME_SIGHTINGS + " WHERE animal_id = " + animalID
+                    + " AND timeStamp LIKE '%" + date + "%'", null);
+            int result;
+            if(cursor.moveToFirst()){
+                result = cursor.getInt(0);
+            }
+            else{
+                result = 0;
+            }
+            cursor.close();
+            db.close();
+            return result;
+        }
+
         public void onUpgrade(SQLiteDatabase db, int i, int i1) {}
 //        public String loadHandler(String tableName) {
 //            String result="";
