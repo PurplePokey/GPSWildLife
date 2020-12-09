@@ -7,6 +7,7 @@
     android:background="@color/colorPrimaryDark">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout4"
         android:layout_width="425dp"
         android:layout_height="415dp"
         android:background="@drawable/rounded_background"
@@ -14,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.623">
+        app:layout_constraintVertical_bias="0.889">
 
         <EditText
             android:id="@+id/type_pet_found"
@@ -115,4 +116,22 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
         tools:srcCompat="@tools:sample/avatars" />
+
+    <Button
+        android:id="@+id/upload_found"
+        android:layout_width="205dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="104dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="102dp"
+        android:layout_marginBottom="22dp"
+        android:background="@drawable/rounded_background"
+        android:text="@string/uploadStr"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/found_pet_pic" />
 </androidx.constraintlayout.widget.ConstraintLayout>
