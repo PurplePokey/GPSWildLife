@@ -6,6 +6,10 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -15,6 +19,7 @@ import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.lang.Object;
 
@@ -24,15 +29,51 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class notifications extends AppCompatActivity {
     boolean Subscribed;
+    //Location managers
     private LocationManager locationManager;
     private LocationListener locationListener;
+    //Sensor Managers
+    private SensorManager sensorManager;
+    private Sensor proximitySensor;
+    private SensorEventListener proximitySensorListener;
+
     TextView t = findViewById(R.id.textLocation);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notifications);
+        //Sensor
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
 
+        if(proximitySensor == null){
+            Toast.makeText(this, "Proximity sensor is not available", Toast.LENGTH_LONG).show();
+            finish();
+        }
+
+        proximitySensorListener = new SensorEventListener() {
+            @Override
+            public void onSensorChanged(SensorEvent event) {
+                if (event.values[0] < proximitySensor.getMaximumRange()){
+                    if(Subscribed == true) {
+                        warnNotification();
+                        LocationUpdate();
+                    }
+                }else{
+                    //nothing
+                }
+            }
+
+            @Override
+            public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+            }
+        };
+        sensorManager.registerListener(proximitySensorListener,proximitySensor,
+                2 * 1000 * 1000);
+
+        //Location
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         locationListener = new LocationListener() {
             @Override
@@ -121,6 +162,12 @@ public class notifications extends AppCompatActivity {
                 foundNotification();
             }
         });
+    }
+    //more of the proximity Sensor
+    @Override
+    protected void onPause(){
+        super.onPause();
+        sensorManager.unregisterListener(proximitySensorListener);
     }
 
     void LocationUpdate(){

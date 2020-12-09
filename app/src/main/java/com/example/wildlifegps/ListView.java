@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -30,6 +31,14 @@ public class ListView extends AppCompatActivity implements View.OnClickListener 
         i =getIntent();
         user= i.getExtras().getString("user");
 
+        ImageButton notifyButton = findViewById(R.id.notifications_list_btn);
+        notifyButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                openNotifications();
+            }
+        });
+
         getSupportActionBar().hide();
 
         initViews();
@@ -45,6 +54,11 @@ public class ListView extends AppCompatActivity implements View.OnClickListener 
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 11);
             }
         }
+    }
+
+    public void openNotifications(){
+        Intent intent = new Intent(this, notifications.class);
+        startActivity(intent);
     }
 
     private void initViews(){

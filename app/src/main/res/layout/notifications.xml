@@ -10,16 +10,20 @@
         android:id="@+id/subButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="35dp"
         android:text="Subscribe"
-        tools:layout_editor_absoluteX="35dp"
-        tools:layout_editor_absoluteY="45dp" />
+        app:layout_constraintBottom_toTopOf="@+id/buttonWarn"
+        app:layout_constraintEnd_toStartOf="@+id/unsubButton" />
 
     <Button
         android:id="@+id/unsubButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Unsubscribe"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="45dp"
         tools:visibility="invisible" />
@@ -28,9 +32,10 @@
         android:id="@+id/buttonWarn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="37dp"
         android:text="Warning"
-        tools:layout_editor_absoluteX="38dp"
-        tools:layout_editor_absoluteY="128dp" />
+        app:layout_constraintBottom_toTopOf="@+id/buttonFound"
+        tools:layout_editor_absoluteX="38dp" />
 
     <Button
         android:id="@+id/buttonFound"
