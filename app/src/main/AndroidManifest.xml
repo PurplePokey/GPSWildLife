@@ -33,6 +33,10 @@
 
         </activity>
 
+        <activity android:name=".notifications">
+
+        </activity>
+
     </application>
 
 </manifest>

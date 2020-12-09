@@ -167,7 +167,7 @@ public class notifications extends AppCompatActivity {
         }
     }
 
-    /*
+
     private void compareLocation(){
         updateLocation();
         if(location == sighting_variable.getLocation()){
@@ -176,7 +176,7 @@ public class notifications extends AppCompatActivity {
             }
         }
     }
-    */
+
 
     private class MyLocationListener implements LocationListener{
         @Override
