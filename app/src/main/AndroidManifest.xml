@@ -32,6 +32,9 @@
         <activity android:name=".CreateSighting">
 
         </activity>
+        <activity android:name=".SightingSelector">
+
+        </activity>
 
     </application>
 

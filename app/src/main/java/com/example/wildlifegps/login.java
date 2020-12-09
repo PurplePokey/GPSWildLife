@@ -16,8 +16,6 @@ public class login extends AppCompatActivity implements View.OnClickListener{
 
     private final AppCompatActivity activity = login.this;
 
-
-
     private EditText username;
     private EditText password;
 

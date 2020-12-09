@@ -63,9 +63,9 @@ public class ListView extends AppCompatActivity implements View.OnClickListener 
     public void onClick(View view){
 
         if(view.getId()==(R.id.add_sighting)){
-            Intent intentCreateSighting = new Intent(getApplicationContext(), CreateSighting.class);
-            intentCreateSighting.putExtra("user", user);
-            startActivity(intentCreateSighting);
+            Intent intentSightingSelector = new Intent(getApplicationContext(), SightingSelector.class);
+            intentSightingSelector.putExtra("user", user);
+            startActivity(intentSightingSelector);
 
         }
 

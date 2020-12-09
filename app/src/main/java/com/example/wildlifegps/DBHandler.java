@@ -149,6 +149,7 @@ public class DBHandler extends SQLiteOpenHelper {
             String description = sighting.getDescription();
             String filename = sighting.getImageFileName();
             String username = sighting.getOwner().getUsername();
+            int aniID = sighting.getAnimal().getAnimalID();
 
             ContentValues contentValues = new ContentValues();
             contentValues.put("sighting_id", ID);
@@ -160,6 +161,7 @@ public class DBHandler extends SQLiteOpenHelper {
             contentValues.put("imgFile", filename);
             contentValues.put("flagCount", flagCount);
             contentValues.put("username", username);
+            contentValues.put("animal_id", aniID);
 
             db.insert(TABLE_NAME_SIGHTINGS, null, contentValues);
             db.close();
@@ -210,7 +212,7 @@ public class DBHandler extends SQLiteOpenHelper {
             boolean bool= false;
             int sightingID = sighting.getID();
 
-            Cursor cursor = db.rawQuery("SELECT content FROM"+ TABLE_NAME_TAGS + "WHERE content = '" + tag + "'",null);
+            Cursor cursor = db.rawQuery("SELECT content FROM "+ TABLE_NAME_TAGS + " WHERE content = '" + tag + "'",null);
             bool=cursor.moveToFirst();
 
             if(!bool){

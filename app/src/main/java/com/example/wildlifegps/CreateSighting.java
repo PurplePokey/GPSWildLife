@@ -46,6 +46,7 @@ public class CreateSighting extends AppCompatActivity implements View.OnClickLis
     private Location location;
 
 
+    private Button upload;
     private Button cancel;
     private Button create;
 
@@ -73,6 +74,7 @@ public class CreateSighting extends AppCompatActivity implements View.OnClickLis
 
         identify=(Switch) findViewById(R.id.requestIdenSwitch);
 
+        upload=(Button) findViewById(R.id.upload_image);
         cancel = (Button) findViewById(R.id.cancel_create_sighting);
         create= (Button) findViewById(R.id.create_sighting);
     }
@@ -106,15 +108,15 @@ public class CreateSighting extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View view){
-        //boolean sw = false;
+        //upload image
+        if(view.getId()==(R.id.upload_image)){
+
+        }
 
         //if create sighting button is pressed
         if(view.getId()==(R.id.create_sighting)){
-            //get status of Switch
-            //sw = identify.isChecked();
-
             //validate title field is filled if request switch is off
-            if(checkInput(title)/*&&!sw*/){
+            if(checkInput(title)){
                 //validate desc field is filled
                 if(checkInput(desc)){
 
@@ -169,8 +171,12 @@ public class CreateSighting extends AppCompatActivity implements View.OnClickLis
         sighting.setFlagCount(0);
         sighting.setTags(tagList);
 
-
         db.addSighting(sighting);
+
+        //agg tags to the database
+        for(int i=0; i<tagArr.length;i++){
+            db.addTag(sighting, tagArr[i]);
+        }
 
 
 
