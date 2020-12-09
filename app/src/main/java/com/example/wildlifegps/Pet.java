@@ -1,6 +1,8 @@
 package com.example.wildlifegps;
 
-public class Pet extends Animal{
+import java.io.Serializable;
+
+public class Pet extends Animal implements Serializable {
 
     private int petID;
     private String petName;
