@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.wildlifegps">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
 
     <application
@@ -28,17 +29,10 @@
 
         </activity>
 
-        <activity android:name=".deleteSighting">
+        <activity android:name=".CreateSighting">
 
         </activity>
 
-        <activity android:name=".search">
-
-        </activity>
-
-        <activity android:name=".addComment">
-
-        </activity>
     </application>
 
 </manifest>
