@@ -29,44 +29,12 @@ public class notifications extends AppCompatActivity {
     private double longitude;
     private Location location;
 
-    //TextView t = findViewById(R.id.textLocation);
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notifications);
 
-
-        //Location
-        //Location managers
-        /*
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        LocationListener locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                t.append("\n " + location.getLongitude() + " " + location.getLatitude());
-            }
-
-            @Override
-            public void onStatusChanged(String s, int i, Bundle bundle) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String s) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String s) {
-
-                Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(i);
-            }
-        };
-
-        */
 
         // Finds the subscribe button from the xml layout file
         final Button SubNotificationButton = findViewById(R.id.subButton);
@@ -132,22 +100,7 @@ public class notifications extends AppCompatActivity {
             }
         });
     }
-
-    /*
-    void LocationUpdate(){
-        // first check for permissions
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.INTERNET}
-                        ,10);
-            }
-            return;
-        }
-        //noinspection MissingPermission
-        //locationManager.requestLocationUpdates("gps", 5000, 0, LocationListener);
-
-    }
-    */
+    
     private void updateLocation(){
         mylistener = new MyLocationListener();
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -167,7 +120,10 @@ public class notifications extends AppCompatActivity {
         }
     }
 
-
+    /*
+    //What will compare current location to sighting locations
+        //still need loop to constantly loop through updateLocation?
+        //still need to find way to compare to many sightings : loop through list of sightings?
     private void compareLocation(){
         updateLocation();
         if(location == sighting_variable.getLocation()){
@@ -176,6 +132,7 @@ public class notifications extends AppCompatActivity {
             }
         }
     }
+     */
 
 
     private class MyLocationListener implements LocationListener{
