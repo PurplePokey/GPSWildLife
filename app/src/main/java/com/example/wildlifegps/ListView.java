@@ -5,9 +5,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
+import android.graphics.drawable.Drawable;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -15,21 +16,22 @@ import android.text.Layout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.LinearLayout.LayoutParams;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -42,6 +44,15 @@ import java.util.Calendar;
 public class ListView extends AppCompatActivity{
 
     private final AppCompatActivity activity = ListView.this;
+    private Intent i;
+    private String user;
+
+    private Button addSighting;
+    private Button submit;
+    private ArrayList<Sighting> list = new ArrayList<>();
+    private Spinner spin;
+    private EditText tv;
+    private String query;
 
     private LinearLayout cards;
     private Drawable roundBackground;
@@ -51,10 +62,6 @@ public class ListView extends AppCompatActivity{
     private Location currentLoc;
 
     private ArrayList<Sighting> results = new ArrayList<>();
-    private Intent i;
-    private String user;
-
-    private Button addSighting;
     private ListLocationListener mylistener;
 
     @Override
@@ -100,21 +107,23 @@ public class ListView extends AppCompatActivity{
     }
 
     private void initViews(){
-        addSighting=(Button) findViewById(R.id.add_sighting);
         cards = findViewById(R.id.cardView);
         roundBackground = getDrawable(R.drawable.rounded_textbox);
+        addSighting=(Button) findViewById(R.id.add_sighting);
+        submit = (Button) findViewById(R.id.submit);
+
+        tv = findViewById(R.id.searchview);
+        spin = findViewById(R.id.search_list_dropdown);
     }
 
     private void initListeners(){
         addSighting.setOnClickListener(clickCreateSighting);
-        display();
+        submit.setOnClickListener(clickSubmit);
     }
-
     @Override
     protected void onStart(){
         super.onStart();
     }
-
     private void initObjects(){
         db=new DBHandler(activity);
 
@@ -284,15 +293,74 @@ public class ListView extends AppCompatActivity{
         }
     }
 
+    //clicking the plus button
     private View.OnClickListener clickCreateSighting = new View.OnClickListener(){
         public void onClick(View view){
-            Intent intentCreateSighting = new Intent(getApplicationContext(), CreateSighting.class);
-            intentCreateSighting.putExtra("user", user);
-            startActivity(intentCreateSighting);
+            Intent intentSightingSelect = new Intent(getApplicationContext(), SightingSelector.class);
+            intentSightingSelect.putExtra("user", user);
+            startActivity(intentSightingSelect);
         }
     };
 
+    private View.OnClickListener clickSubmit = new View.OnClickListener(){
+        public void onClick(View view){
+            if(view.getId()==(R.id.submit)) {
 
+                if (!(tv.getText().toString().trim().equals(""))) {
+                    query = tv.getText().toString().trim();
+
+                    if (spin.getSelectedItemPosition() == 0) {
+                        final Geocoder geocoder = new Geocoder(activity);
+                        if (query.matches("[0-9]+") && query.length() == 5) {
+
+                            try {
+                                List<Address> addresses = geocoder.getFromLocationName(query, 1);
+                                if (addresses != null && !addresses.isEmpty()) {
+                                    Address address = addresses.get(0);
+                                    // Use the address as needed
+                                    double lat = address.getLatitude();
+                                    double lon = address.getLongitude();
+                                    Location loc = new Location("");
+                                    loc.setLatitude(lat);
+                                    loc.setLongitude(lon);
+
+                                    list = db.searchByLocation(loc);
+
+                                    Intent intentSearch = new Intent(activity, ListView.class);
+                                    intentSearch.putExtra("Sighting", list);
+                                    startActivity(intentSearch);
+
+                                } else {
+                                    // Display appropriate message when Geocoder services are not available
+                                    Toast.makeText(activity, "Unable to geocode zipcode", Toast.LENGTH_LONG).show();
+                                }
+
+                            } catch (IOException e) {
+                                // handle exception
+                            }
+                        } else if (!(query.matches("[0-9]+") && query.length() == 5)) {
+                            Toast.makeText(activity, "Enter a valid zip code", Toast.LENGTH_LONG).show();
+                        }
+                    } else if (spin.getSelectedItemPosition() == 1) {
+
+                        list = db.searchByTag(query);
+                        Toast.makeText(getApplicationContext(), query, Toast.LENGTH_LONG).show();
+
+                        Intent intentSearch = new Intent(activity, ListView.class);
+                        intentSearch.putExtra("Sighting", list);
+                        startActivity(intentSearch);
+
+                    } else {
+                        Toast.makeText(activity, "No Match found", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Enter Text", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+    };
+
+    //for clicking sightings
     private View.OnClickListener click = new View.OnClickListener() {
         public void onClick(View view) {
             int id = view.getId();

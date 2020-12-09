@@ -4,33 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorPrimary"
+    tools:context=".ListView">
 
-    <SearchView
-        android:id="@+id/searchView"
-        android:layout_width="200dp"
-        android:layout_height="49dp"
-        android:layout_marginTop="32dp"
-        android:background="@drawable/rounded_background"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
-
-    </SearchView>
 
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/colorPrimary"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:layout_weight="1"
+        android:background="@color/colorPrimary"
         app:layout_constraintBottom_toTopOf="@+id/notifications_list_btn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView">
+        app:layout_constraintTop_toBottomOf="@+id/submit"
+        app:layout_constraintVertical_bias="1.0">
 
 
         <LinearLayout
@@ -55,6 +44,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0"
                     tools:srcCompat="@tools:sample/avatars" />
 
                 <TextView
@@ -99,15 +89,20 @@
         android:id="@+id/map_view_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="7dp"
+        android:layout_marginBottom="9dp"
         android:background="@drawable/rounded_background"
         android:fontFamily="sans-serif-medium"
         android:text="@string/map_view"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/searchView"
-        app:layout_constraintEnd_toStartOf="@+id/searchView"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView"
+        app:layout_constraintEnd_toStartOf="@+id/searchview"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
@@ -126,16 +121,27 @@
         android:id="@+id/search_list_dropdown"
         android:layout_width="89dp"
         android:layout_height="49dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="31dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="9dp"
         android:background="@color/text_box"
         android:entries="@array/dropDown"
-        app:layout_constraintBottom_toBottomOf="@+id/searchView"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/searchView" />
+        app:layout_constraintStart_toEndOf="@+id/searchview"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
         android:id="@+id/notifications_list_btn"
         android:layout_width="70dp"
         android:layout_height="70dp"
+
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="185dp"
+        android:layout_marginEnd="232dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/rounded_black_btn"
         android:foregroundTint="@color/colorPrimary"
         app:srcCompat="@android:drawable/ic_popup_reminder"
@@ -143,5 +149,37 @@
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="112dp"
         tools:layout_editor_absoluteY="474dp" />
+
+    <EditText
+        android:id="@+id/searchview"
+        android:layout_width="196dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="648dp"
+        android:background="@drawable/rounded_textbox"
+        android:ems="10"
+        android:foregroundTint="#BBBBBB"
+        android:text="Search"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/search_list_dropdown"
+        app:layout_constraintHorizontal_bias="0.455"
+        app:layout_constraintStart_toEndOf="@+id/map_view_button"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"/>
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="588dp"
+        android:text="Submit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/search_list_dropdown"
+        app:layout_constraintTop_toBottomOf="@+id/search_list_dropdown"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

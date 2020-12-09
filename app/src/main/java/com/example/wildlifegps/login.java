@@ -35,7 +35,6 @@ public class login extends AppCompatActivity implements View.OnClickListener{
         initListeners();
         initObjects();
 
-
     }
 
     public void initViews(){
@@ -95,7 +94,6 @@ public class login extends AppCompatActivity implements View.OnClickListener{
         }
     }
 
-
     public boolean checkInput(String value){
         //String value = text.getText().toString().trim();
         if(value.isEmpty()){
@@ -105,5 +103,5 @@ public class login extends AppCompatActivity implements View.OnClickListener{
             return true;
         }
     }
-
 }
+

@@ -7,10 +7,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import android.os.Parcelable;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+import java.io.Serializable;
+import java.util.ArrayList;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ViewSighting extends AppCompatActivity {
+
+    private final AppCompatActivity activity = ViewSighting.this;
 
     private Sighting sighting = null;
     private String user = "";
@@ -19,11 +29,13 @@ public class ViewSighting extends AppCompatActivity {
     private TextView userBox;
     private TextView descriptBox;
     private Button learnButton;
-    private Button deleteButton;
+    private Button delete;
     private Button updateButton;
     private Button backButton;
     private TextView identify;
     private ImageView img;
+    private ArrayList<Sighting> list;
+    private DBHandler dbh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +54,7 @@ public class ViewSighting extends AppCompatActivity {
     private void initObjects(){
         sighting = (Sighting) getIntent().getSerializableExtra("Sighting");
         user = getIntent().getStringExtra("user");
+        dbh = new DBHandler(activity);
     }
 
     //initialize view objects
@@ -53,9 +66,10 @@ public class ViewSighting extends AppCompatActivity {
         learnButton = findViewById(R.id.learn_more_btn);
         identify = findViewById(R.id.identify_txt);
         img = findViewById(R.id.sighting_photo);
-        deleteButton = findViewById(R.id.delete_sighting);
+        delete= findViewById(R.id.delete_sighting);
         updateButton = findViewById(R.id.updateSightingBtn);
         backButton = findViewById(R.id.sighting_back_button);
+
     }
 
     //create listeners
@@ -67,12 +81,14 @@ public class ViewSighting extends AppCompatActivity {
         else{
             learnButton.setVisibility(View.INVISIBLE);
         }
+        delete.setOnClickListener(deleteSighting);
     }
 
     //set view objects to show sighting info rather than placeholders
     private void display(){
+
         if(!user.equals(sighting.getOwner().getUsername())){
-            deleteButton.setVisibility(View.GONE);
+            delete.setVisibility(View.GONE);
             updateButton.setVisibility(View.GONE);
         }
         if(sighting != null){
@@ -81,6 +97,14 @@ public class ViewSighting extends AppCompatActivity {
             commonNameBox.setText(commonName);
             userBox.setText(sighting.getOwner().getUsername());
             descriptBox.setText(sighting.getDescription());
+            if(sighting.getAnimal() instanceof Species){
+                //Species specific display
+                scienceNameBox.setText(((Species) sighting.getAnimal()).getScienceName());
+
+            }
+            else{
+                //Pet specific display
+            }
             //show placeholder image
             img.setImageResource(R.drawable.fox);
             if(sighting.getAnimal() != null){
@@ -111,6 +135,24 @@ public class ViewSighting extends AppCompatActivity {
             Intent i = new Intent(ViewSighting.this, AnimalInformation.class);
             i.putExtra("Animal", sighting.getAnimal());
             startActivity(i);
+        }
+    };
+
+    private View.OnClickListener deleteSighting = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if(view.getId()==(R.id.delete_sighting)){
+                dbh.deleteSighting(sighting);
+
+                Toast.makeText(activity, "Sighting Successfully Deleted", Toast.LENGTH_LONG).show();
+
+                list = dbh.filterByTime();
+
+                Intent intentDelete = new Intent(getApplicationContext(), ListView.class);
+                intentDelete.putExtra("deletedSightingList", (Serializable) list);
+                startActivity(intentDelete);
+
+            }
         }
     };
 }

@@ -59,79 +59,79 @@ public class DBHandler extends SQLiteOpenHelper {
                     +"constraint FK_UserSighting foreign key (username) references Users(username)"
             +");");
 
-            db.execSQL("create table Tags("
-                    +"content varchar(15) primary key"
-            +")");
+        db.execSQL("create table Tags("
+                +"content varchar(15) primary key"
+                +")");
 
-            db.execSQL("create table SightingTags("
-                    +"sighting_id int,"
-                    +"content varchar(15),"
-                    +"primary key (sighting_id, content),"
-                    +"constraint FK_Sighting foreign key (sighting_id)"
-                    +"references Sightings(sighting_id),"
-                    +"constraint FK_Tag foreign key (content)"
-                    +"references Tags(content)"
-            +")");
+        db.execSQL("create table SightingTags("
+                +"sighting_id int,"
+                +"content varchar(15),"
+                +"primary key (sighting_id, content),"
+                +"constraint FK_Sighting foreign key (sighting_id)"
+                +"references Sightings(sighting_id),"
+                +"constraint FK_Tag foreign key (content)"
+                +"references Tags(content)"
+                +")");
 
-            db.execSQL("create table Comments("
-                    +"comment_id int primary key,"
-                    +"username varchar(30),"
-                    +"sighting_id int,"
-                    +"time varchar(20),"
-                    +"content varchar (280),"
-                    +"constraint FK_CommentSighting foreign key (sighting_id)"
-                    +"references Sightings(sighting_id)"
-            +")");
+        db.execSQL("create table Comments("
+                +"comment_id int primary key,"
+                +"username varchar(30),"
+                +"sighting_id int,"
+                +"time varchar(20),"
+                +"content varchar (280),"
+                +"constraint FK_CommentSighting foreign key (sighting_id)"
+                +"references Sightings(sighting_id)"
+                +")");
 
-            db.execSQL("create table Animals("
+        db.execSQL("create table Animals("
                 +"animal_id int primary key,"
                 +"comm_name varchar(30)"
-             +")");
+                +")");
 
-            db.execSQL("create table Species("
-                    +"science_name varchar(45) primary key,"
-                    +"animal_id int,"
-                    +"conserve_status varchar(2),"
-                    +"diet varchar(200),"
-                    +"appearence varchar(200),"
-                    +"constraint FK_SpeciesAnimal foreign key (animal_id)"
-                    +"references Animals(animal_id)"
-                    +")");
+        db.execSQL("create table Species("
+                +"science_name varchar(45) primary key,"
+                +"animal_id int,"
+                +"conserve_status varchar(2),"
+                +"diet varchar(200),"
+                +"appearence varchar(200),"
+                +"constraint FK_SpeciesAnimal foreign key (animal_id)"
+                +"references Animals(animal_id)"
+                +")");
 
-            db.execSQL("create table Pets("
-                    +"pet_id int primary key,"
-                    +"animal_id int,"
-                    +"pet_name varchar(40),"
-                    +"lost_or_found int,"
-                    +"constraint FK_PetAnimal foreign key (animal_id)"
-                    +"references Animals(animal_id)"
-                    +")");
+        db.execSQL("create table Pets("
+                +"pet_id int primary key,"
+                +"animal_id int,"
+                +"pet_name varchar(40),"
+                +"lost_or_found int,"
+                +"constraint FK_PetAnimal foreign key (animal_id)"
+                +"references Animals(animal_id)"
+                +")");
 
-            db.execSQL("create table Observers("
-                    +"username varchar(30),"
-                    +"animal_id int,"
-                    +"primary key(username, animal_id),"
-                    +"constraint FK_UserObserver foreign key(username)"
-                    +"references Users(username),"
-                    +"constraint FK_AnimalObserved foreign key(animal_id)"
-                    +"references Animals(animal_id)"
-                    +")");
-        }
+        db.execSQL("create table Observers("
+                +"username varchar(30),"
+                +"animal_id int,"
+                +"primary key(username, animal_id),"
+                +"constraint FK_UserObserver foreign key(username)"
+                +"references Users(username),"
+                +"constraint FK_AnimalObserved foreign key(animal_id)"
+                +"references Animals(animal_id)"
+                +")");
+    }
 
-        //ADD
-        public void addUser(User user){
-            SQLiteDatabase db = this.getWritableDatabase();
-            String username=user.getUsername();
-            String password=user.getPassword();
+    //ADD
+    public void addUser(User user){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String username=user.getUsername();
+        String password=user.getPassword();
 
-            ContentValues contentValues = new ContentValues();
-            contentValues.put("username", username);
-            contentValues.put("password", password);
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("username", username);
+        contentValues.put("password", password);
 
-            db.insert(TABLE_NAME_USERS, null, contentValues);
-            db.close();
+        db.insert(TABLE_NAME_USERS, null, contentValues);
+        db.close();
 
-        }
+    }
 
         public void addSighting(Sighting sighting){
             sightingIDCount++;
@@ -182,163 +182,163 @@ public class DBHandler extends SQLiteOpenHelper {
             db.insert(TABLE_NAME_ANIMALS, null, contentValues);
             db.close();
 
-        }
+    }
 
-        public void addComment(Comment comment){
-            SQLiteDatabase db = this.getWritableDatabase();
+    public void addComment(Comment comment){
+        SQLiteDatabase db = this.getWritableDatabase();
 
-            int commentID = comment.getID();
-            String username= comment.getUser().getUsername();
-            int sightID = comment.getSighting().getID();
-            Calendar timestamp = comment.getTimeStamp();
-            String time = timestamp.get(Calendar.HOUR_OF_DAY) + ":" + timestamp.get(Calendar.MINUTE) + " " + timestamp.get(Calendar.MONTH) +
-                    ":" + timestamp.get(Calendar.DAY_OF_MONTH) + ":" + timestamp.get(Calendar.YEAR);
-            String content=comment.getComment();
+        int commentID = comment.getID();
+        String username= comment.getUser().getUsername();
+        int sightID = comment.getSighting().getID();
+        Calendar timestamp = comment.getTimeStamp();
+        String time = timestamp.get(Calendar.HOUR_OF_DAY) + ":" + timestamp.get(Calendar.MINUTE) + " " + timestamp.get(Calendar.MONTH) +
+                ":" + timestamp.get(Calendar.DAY_OF_MONTH) + ":" + timestamp.get(Calendar.YEAR);
+        String content=comment.getComment();
 
-            ContentValues contentValues = new ContentValues();
-            contentValues.put("comment_id", commentID);
-            contentValues.put("username", username);
-            contentValues.put("sight_id", sightID);
-            contentValues.put("time", time);
-            contentValues.put("content", content);
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("comment_id", commentID);
+        contentValues.put("username", username);
+        contentValues.put("sight_id", sightID);
+        contentValues.put("time", time);
+        contentValues.put("content", content);
 
-            db.insert(TABLE_NAME_COMMENTS, null, contentValues);
-            db.close();
+        db.insert(TABLE_NAME_COMMENTS, null, contentValues);
+        db.close();
 
-        }
+    }
 
-        public void addTag(Sighting sighting, String tag){
-            SQLiteDatabase db = this.getWritableDatabase();
-            boolean bool= false;
-            int sightingID = sighting.getID();
+    public void addTag(Sighting sighting, String tag){
+        SQLiteDatabase db = this.getWritableDatabase();
+        boolean bool= false;
+        int sightingID = sighting.getID();
 
             Cursor cursor = db.rawQuery("SELECT content FROM "+ TABLE_NAME_TAGS + " WHERE content = '" + tag + "'",null);
             bool=cursor.moveToFirst();
 
-            if(!bool){
-                ContentValues contentValues = new ContentValues();
-                contentValues.put("content", tag);
-                db.insert(TABLE_NAME_TAGS, null, contentValues);
-            }
-
-            ContentValues contentValues1 = new ContentValues();
-            contentValues1.put("content", tag);
-            contentValues1.put("sighting_id", sightingID);
-            db.insert(TABLE_NAME_SIGHTINGTAGS, null, contentValues1);
-            db.close();
-        }
-
-        public void addPet(Pet pet){
-            SQLiteDatabase db = this.getWritableDatabase();
-            int petID = pet.getPetID();
-            String petName = pet.getPetName();
-            String common = pet.getCommonName();
-            int animalID= pet.getAnimalID();
-            int lostFound = pet.getLostFound();
-
+        if(!bool){
             ContentValues contentValues = new ContentValues();
-            contentValues.put("animal_id", animalID);
-            contentValues.put("common_name", common);
-            db.insert(TABLE_NAME_ANIMALS, null, contentValues);
-
-            ContentValues contentValues2 = new ContentValues();
-            contentValues2.put("pet_id", petID);
-            contentValues2.put("pet_name", petName);
-            contentValues2.put("animal_id", animalID);
-            contentValues2.put("lost_or_found", lostFound);
-            db.insert(TABLE_NAME_PETS, null, contentValues);
-            db.close();
-
+            contentValues.put("content", tag);
+            db.insert(TABLE_NAME_TAGS, null, contentValues);
         }
 
-        //UPDATE
-        public void updateFlagCount(Sighting sighting){
-            SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues1 = new ContentValues();
+        contentValues1.put("content", tag);
+        contentValues1.put("sighting_id", sightingID);
+        db.insert(TABLE_NAME_SIGHTINGTAGS, null, contentValues1);
+        db.close();
+    }
 
-            int ID= sighting.getID();
-            int flag = sighting.getFlagCount();
+    public void addPet(Pet pet){
+        SQLiteDatabase db = this.getWritableDatabase();
+        int petID = pet.getPetID();
+        String petName = pet.getPetName();
+        String common = pet.getCommonName();
+        int animalID= pet.getAnimalID();
+        int lostFound = pet.getLostFound();
 
-            db.execSQL("UPDATE " + TABLE_NAME_SIGHTINGS + " SET flagCount = '" + flag+ "' WHERE sighting_id = '"+ID+"'");
-            db.close();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("animal_id", animalID);
+        contentValues.put("common_name", common);
+        db.insert(TABLE_NAME_ANIMALS, null, contentValues);
 
+        ContentValues contentValues2 = new ContentValues();
+        contentValues2.put("pet_id", petID);
+        contentValues2.put("pet_name", petName);
+        contentValues2.put("animal_id", animalID);
+        contentValues2.put("lost_or_found", lostFound);
+        db.insert(TABLE_NAME_PETS, null, contentValues);
+        db.close();
+
+    }
+
+    //UPDATE
+    public void updateFlagCount(Sighting sighting){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        int ID= sighting.getID();
+        int flag = sighting.getFlagCount();
+
+        db.execSQL("UPDATE " + TABLE_NAME_SIGHTINGS + " SET flagCount = '" + flag+ "' WHERE sighting_id = '"+ID+"'");
+        db.close();
+
+    }
+
+    public void updateSighting(Sighting sighting, String imageFile, String desc, ArrayList<String> tags, String title){
+        SQLiteDatabase db = this.getWritableDatabase();
+        int sightingID=sighting.getID();
+
+        //add each tag
+        for(int i =0; i < tags.size();i++){
+            addTag(sighting, tags.get(i));
         }
 
-        public void updateSighting(Sighting sighting, String imageFile, String desc, ArrayList<String> tags, String title){
-            SQLiteDatabase db = this.getWritableDatabase();
-            int sightingID=sighting.getID();
+        db.execSQL("UPDATE " + TABLE_NAME_SIGHTINGS + " SET imgFile = '" + imageFile+ "' WHERE sighting_id = '"+sightingID+"'");
+        db.execSQL("UPDATE " + TABLE_NAME_SIGHTINGS + " SET description = '" + desc+ "' WHERE sighting_id = '"+sightingID+"'");
+        db.execSQL("UPDATE " + TABLE_NAME_SIGHTINGS + " SET title = '" + title+ "' WHERE sighting_id = '"+sightingID+"'");
+        db.close();
+    }
 
-            //add each tag
-            for(int i =0; i < tags.size();i++){
-                addTag(sighting, tags.get(i));
-            }
+    public void updateTime(Sighting sighting){
+        //assume the sighting object has updated timestamp
+        SQLiteDatabase db = this.getWritableDatabase();
 
-            db.execSQL("UPDATE " + TABLE_NAME_SIGHTINGS + " SET imgFile = '" + imageFile+ "' WHERE sighting_id = '"+sightingID+"'");
-            db.execSQL("UPDATE " + TABLE_NAME_SIGHTINGS + " SET description = '" + desc+ "' WHERE sighting_id = '"+sightingID+"'");
-            db.execSQL("UPDATE " + TABLE_NAME_SIGHTINGS + " SET title = '" + title+ "' WHERE sighting_id = '"+sightingID+"'");
-            db.close();
-        }
+        int sightingID= sighting.getID();
+        Calendar timestamp = sighting.getTimestamp();
+        String time = timestamp.get(Calendar.HOUR_OF_DAY) + ":" + timestamp.get(Calendar.MINUTE) + " " + timestamp.get(Calendar.MONTH) +
+                ":" + timestamp.get(Calendar.DAY_OF_MONTH) + ":" + timestamp.get(Calendar.YEAR);
 
-        public void updateTime(Sighting sighting){
-            //assume the sighting object has updated timestamp
-            SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("UPDATE " + TABLE_NAME_SIGHTINGS + " SET timeStamp = '" + time+ "' WHERE sighting_id = '"+sightingID+"'");
+        db.close();
+    }
 
-            int sightingID= sighting.getID();
-            Calendar timestamp = sighting.getTimestamp();
-            String time = timestamp.get(Calendar.HOUR_OF_DAY) + ":" + timestamp.get(Calendar.MINUTE) + " " + timestamp.get(Calendar.MONTH) +
-                    ":" + timestamp.get(Calendar.DAY_OF_MONTH) + ":" + timestamp.get(Calendar.YEAR);
+    //DELETE
+    public void deleteSighting(Sighting sighting){
+        SQLiteDatabase db = this.getWritableDatabase();
 
-            db.execSQL("UPDATE " + TABLE_NAME_SIGHTINGS + " SET timeStamp = '" + time+ "' WHERE sighting_id = '"+sightingID+"'");
-            db.close();
-        }
+        int ID= sighting.getID();
 
-        //DELETE
-        public void deleteSighting(Sighting sighting){
-            SQLiteDatabase db = this.getWritableDatabase();
-
-            int ID= sighting.getID();
-
-            db.execSQL("DELETE FROM "+ TABLE_NAME_SIGHTINGS+" WHERE sighting_id = '"+ ID+"'");
-            db.close();
-        }
+        db.execSQL("DELETE FROM "+ TABLE_NAME_SIGHTINGS+" WHERE sighting_id = '"+ ID+"'");
+        db.close();
+    }
 
 
-        //SEARCH
-        //for registering an account check if username is taken
-        public boolean searchUsername(String username){
-            boolean bool=false;
-            SQLiteDatabase db = this.getWritableDatabase();
+    //SEARCH
+    //for registering an account check if username is taken
+    public boolean searchUsername(String username){
+        boolean bool=false;
+        SQLiteDatabase db = this.getWritableDatabase();
 
-            Cursor cursor = db.rawQuery("SELECT username FROM "+ TABLE_NAME_USERS + " WHERE username = '" + username+"'",null);
-            bool=cursor.moveToFirst();
+        Cursor cursor = db.rawQuery("SELECT username FROM "+ TABLE_NAME_USERS + " WHERE username = '" + username+"'",null);
+        bool=cursor.moveToFirst();
 
-            return bool;
-        }
-        //for login credentials
-        public boolean searchUser(String username, String password) {
-            boolean bool = false;
-            SQLiteDatabase db = this.getWritableDatabase();
+        return bool;
+    }
+    //for login credentials
+    public boolean searchUser(String username, String password) {
+        boolean bool = false;
+        SQLiteDatabase db = this.getWritableDatabase();
 
-            Cursor cursor = db.rawQuery("SELECT * FROM "+ TABLE_NAME_USERS + " WHERE username = '" + username + "' AND password = '" + password +"'",null);
-            bool=cursor.moveToFirst();
+        Cursor cursor = db.rawQuery("SELECT * FROM "+ TABLE_NAME_USERS + " WHERE username = '" + username + "' AND password = '" + password +"'",null);
+        bool=cursor.moveToFirst();
 
-            //db.close();
-            db.close();
-            return bool;
+        //db.close();
+        db.close();
+        return bool;
 
-        }
-        public ArrayList<Sighting> searchByTag(String tag){
-            ArrayList<Sighting> sightings = new ArrayList<>();
-            String time;
-            String username;
-            Location location = new Location("");
-            SQLiteDatabase db = this.getWritableDatabase();
+    }
+    public ArrayList<Sighting> searchByTag(String tag){
+        ArrayList<Sighting> sightings = new ArrayList<>();
+        String time;
+        String username;
+        Location location = new Location("");
+        SQLiteDatabase db = this.getWritableDatabase();
 
-            Cursor cursor = db.rawQuery("SELECT * FROM "+ TABLE_NAME_SIGHTINGS +" s " + " LEFT OUTER JOIN " + TABLE_NAME_SIGHTINGTAGS + " st "
-                    + "ON s.sighting_id = st.sighting_id",null);
+        Cursor cursor = db.rawQuery("SELECT * FROM "+ TABLE_NAME_SIGHTINGS +" s " + " LEFT OUTER JOIN " + TABLE_NAME_SIGHTINGTAGS + " st "
+                + "ON s.sighting_id = st.sighting_id",null);
 
-            cursor.moveToFirst();
-            while(!cursor.isAfterLast()){
-                Sighting temp = new Sighting();
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()){
+            Sighting temp = new Sighting();
 
                 temp.setID(Integer.parseInt(cursor.getString(0)));
                 location.setLongitude(Double.parseDouble(cursor.getString(1)));
@@ -366,19 +366,19 @@ public class DBHandler extends SQLiteOpenHelper {
             return sightings;
         }
 
-        public ArrayList<Sighting> searchByLocation(Location loc){
-            ArrayList<Sighting> sightings = new ArrayList<>();
-            String time;
-            String username;
-            Location location = new Location("");
-            SQLiteDatabase db = this.getWritableDatabase();
+    public ArrayList<Sighting> searchByLocation(Location loc){
+        ArrayList<Sighting> sightings = new ArrayList<>();
+        String time;
+        String username;
+        Location location = new Location("");
+        SQLiteDatabase db = this.getWritableDatabase();
 
-            Cursor cursor = db.rawQuery("SELECT * FROM "+ TABLE_NAME_SIGHTINGS + " WHERE longitude BETWEEN " + (loc.getLongitude()-.07143) + " AND "
-                    + (loc.getLongitude()+.07143) + " AND latitude BETWEEN " + (loc.getLatitude()-.07143) + " AND " + (loc.getLatitude()+.07143), null);
+        Cursor cursor = db.rawQuery("SELECT * FROM "+ TABLE_NAME_SIGHTINGS + " WHERE longitude BETWEEN " + (loc.getLongitude()-.07143) + " AND "
+                + (loc.getLongitude()+.07143) + " AND latitude BETWEEN " + (loc.getLatitude()-.07143) + " AND " + (loc.getLatitude()+.07143), null);
 
-            cursor.moveToFirst();
-            while(!cursor.isAfterLast()){
-                Sighting temp = new Sighting();
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()){
+            Sighting temp = new Sighting();
 
                 temp.setID(Integer.parseInt(cursor.getString(0)));
                 location.setLongitude(Double.parseDouble(cursor.getString(1)));
@@ -405,15 +405,15 @@ public class DBHandler extends SQLiteOpenHelper {
             return sightings;
         }
 
-        public ArrayList<Sighting> filterByTime(){
-            SQLiteDatabase db = this.getWritableDatabase();
-            ArrayList<Sighting> sightings = new ArrayList<>();
-            Location location = new Location("");
-            String time;
-            String username;
+    public ArrayList<Sighting> filterByTime(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ArrayList<Sighting> sightings = new ArrayList<>();
+        Location location = new Location("");
+        String time;
+        String username;
 
-            //sighting_id may nee to be surrounded by ' '
-            Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME_SIGHTINGS + " ORDER BY sighting_id DESC", null);
+        //sighting_id may nee to be surrounded by ' '
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME_SIGHTINGS + " ORDER BY sighting_id DESC", null);
 
             cursor.moveToFirst();
             while(!cursor.isAfterLast()) {
@@ -443,40 +443,40 @@ public class DBHandler extends SQLiteOpenHelper {
             return sightings;
         }
 
-        public Animal getAnimal(int animal_id){
-            SQLiteDatabase db = this.getWritableDatabase();
-            ArrayList<String> observers = new ArrayList<>();
-            Animal animal = null;
-            Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME_ANIMALS + " WHERE animal_id = '"+ animal_id+"'", null);
+    public Animal getAnimal(int animal_id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ArrayList<String> observers = new ArrayList<>();
+        Animal animal = null;
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME_ANIMALS + " WHERE animal_id = '"+ animal_id+"'", null);
 
-            animal.setAnimalID(Integer.parseInt(cursor.getString(0)));
-            animal.setCommonName(cursor.getString(1));
+        animal.setAnimalID(Integer.parseInt(cursor.getString(0)));
+        animal.setCommonName(cursor.getString(1));
 
-            Cursor cursor1 = db.rawQuery("SELECT * FROM " + TABLE_NAME_ANIMALS + " a " + " LEFT OUTER JOIN " + TABLE_NAME_OBSERVERS + " o "
-                        + " ON a.animal_id = o.animal_id", null);
+        Cursor cursor1 = db.rawQuery("SELECT * FROM " + TABLE_NAME_ANIMALS + " a " + " LEFT OUTER JOIN " + TABLE_NAME_OBSERVERS + " o "
+                + " ON a.animal_id = o.animal_id", null);
 
-            cursor1.moveToFirst();
-            while(!cursor1.isAfterLast()) {
-                observers.add(cursor.getString(0));
-            }
-
-            animal.setObservers(observers);
-
-            //check if it is a species
-            boolean bool = false;
-            Cursor cursor2 = db.rawQuery("SELECT * FROM "+ TABLE_NAME_SPECIES + " WHERE animal_id = '" + animal.getAnimalID() + "'",null);
-            bool=cursor.moveToFirst();
-            if(bool){
-                Species species = new Species(animal.getAnimalID(), animal.getCommonName(), cursor2.getString(0), cursor2.getString(2),
-                        cursor2.getString(3), cursor2.getString(4));
-                db.close();
-                return species;
-            }
-            else{
-                db.close();
-                return animal;
-            }
+        cursor1.moveToFirst();
+        while(!cursor1.isAfterLast()) {
+            observers.add(cursor.getString(0));
         }
+
+        animal.setObservers(observers);
+
+        //check if it is a species
+        boolean bool = false;
+        Cursor cursor2 = db.rawQuery("SELECT * FROM "+ TABLE_NAME_SPECIES + " WHERE animal_id = '" + animal.getAnimalID() + "'",null);
+        bool=cursor.moveToFirst();
+        if(bool){
+            Species species = new Species(animal.getAnimalID(), animal.getCommonName(), cursor2.getString(0), cursor2.getString(2),
+                    cursor2.getString(3), cursor2.getString(4));
+            db.close();
+            return species;
+        }
+        else{
+            db.close();
+            return animal;
+        }
+    }
 
         public int getDailySightingCount(int animalID, Calendar c){
             SQLiteDatabase db = this.getWritableDatabase();
