@@ -31,9 +31,9 @@ import java.util.Calendar;
 import static com.example.wildlifegps.DBHandler.animalIDCount;
 import static com.example.wildlifegps.DBHandler.sightingIDCount;
 
-public class LostPet extends AppCompatActivity implements View.OnClickListener {
+public class FoundPet extends AppCompatActivity implements View.OnClickListener {
 
-    private final AppCompatActivity activity = LostPet.this;
+    private final AppCompatActivity activity = FoundPet.this;
 
     private LocationManager locationManager;
     private MyLocationListener mylistener;
@@ -63,7 +63,7 @@ public class LostPet extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.lost_pet);
+        setContentView(R.layout.found_pet);
 
         getSupportActionBar().hide();
         i =getIntent();
@@ -76,12 +76,12 @@ public class LostPet extends AppCompatActivity implements View.OnClickListener {
     }
     private void initViews(){
         photo=(ImageView) findViewById(R.id.sighting_photo);
-        type=(EditText) findViewById(R.id.type_pet_lost);
-        name = (EditText) findViewById(R.id.name_pet_lost);
-        desc = (EditText) findViewById(R.id.desc_pet_lost);
+        type=(EditText) findViewById(R.id.type_pet_found);
+        name = (EditText) findViewById(R.id.name_pet_found);
+        desc = (EditText) findViewById(R.id.desc_pet_found);
         upload=(Button) findViewById(R.id.upload_image);
-        cancel = (Button) findViewById(R.id.cancel_pet_lost);
-        create= (Button) findViewById(R.id.create_pet_lost);
+        cancel = (Button) findViewById(R.id.cancel_pet_found);
+        create= (Button) findViewById(R.id.create_pet_found);
     }
 
     private void initListeners(){
@@ -118,13 +118,13 @@ public class LostPet extends AppCompatActivity implements View.OnClickListener {
         }
 
         //if create sighting button is pressed
-        if(view.getId()==(R.id.create_pet_lost)){
+        if(view.getId()==(R.id.create_pet_found)){
             //validate title field is filled if request switch is off
             if(checkInput(type)){
                 //validate desc field is filled
                 if(checkInput(name)){
 
-                    addLostPet();
+                    addFoundPet();
                     finish();
 
                 }
@@ -138,7 +138,7 @@ public class LostPet extends AppCompatActivity implements View.OnClickListener {
 
             }
         }
-        if(view.getId()==(R.id.cancel_pet_lost)) {
+        if(view.getId()==(R.id.cancel_pet_found)) {
             finish();
         }
 
@@ -168,7 +168,7 @@ public class LostPet extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
-    private void addLostPet(){
+    private void addFoundPet(){
         Sighting sighting =new Sighting();
 
         //get information to create sighting object
@@ -176,7 +176,7 @@ public class LostPet extends AppCompatActivity implements View.OnClickListener {
         int id = sightingIDCount;
         User owner = new User(user);
         Pet pet = new Pet (animalIDCount, strTitle);
-        pet.setLostFound(0);
+        pet.setLostFound(1);
         db.addAnimal(pet);
         Calendar calendar = Calendar.getInstance();
         String description = desc.getText().toString().trim();
@@ -192,7 +192,7 @@ public class LostPet extends AppCompatActivity implements View.OnClickListener {
 
         db.addSighting(sighting);
 
-        }
+    }
 
 
     private boolean checkInput(EditText text){
