@@ -8,10 +8,11 @@
 
     <TextView
         android:id="@+id/common_name_info_text"
-        android:layout_width="412dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="1dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
+        android:paddingTop="30dp"
+        android:paddingEnd="10dp"
         android:inputType="textMultiLine"
         android:text="Common Species Name"
         android:textAlignment="textEnd"
@@ -27,10 +28,11 @@
 
     <TextView
         android:id="@+id/scientific_name_info_text"
-        android:layout_width="415dp"
-        android:layout_height="33dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        android:text="Scientific Name   "
+        android:paddingEnd="10dp"
+        android:text="Scientific Name"
         android:textAlignment="textEnd"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/colorAccent"
@@ -43,20 +45,19 @@
         android:id="@+id/info_back_btn"
         android:layout_width="64dp"
         android:layout_height="55dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="332dp"
+        android:layout_marginStart="15dp"
         android:background="#00000000"
-        app:layout_constraintEnd_toEndOf="@+id/textView"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/common_name_info_text"
         app:srcCompat="@android:drawable/ic_menu_revert" />
 
     <ScrollView
-        android:layout_width="411dp"
-        android:layout_height="629dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/colorAccent"
+        android:layout_marginTop="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scientific_name_info_text"
         tools:layout_editor_absoluteX="-1dp"
         tools:layout_editor_absoluteY="101dp">
 
@@ -132,9 +133,10 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textSize="20sp" />
             <com.github.mikephil.charting.charts.LineChart
+                android:layout_margin="25dp"
                 android:id="@+id/chart"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"/>
+                android:layout_height="700dp"/>
         </LinearLayout>
     </ScrollView>
 
