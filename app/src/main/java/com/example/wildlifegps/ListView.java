@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.text.Layout;
@@ -54,6 +55,7 @@ public class ListView extends AppCompatActivity{
     private String user;
 
     private Button addSighting;
+    private ListLocationListener mylistener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +71,7 @@ public class ListView extends AppCompatActivity{
         initObjects();
 
         //check location permissions are allowed
+        locManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
             if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)){
 
@@ -76,6 +79,21 @@ public class ListView extends AppCompatActivity{
             else{
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 11);
             }
+        }
+        else {
+            //Toast.makeText(getApplicationContext(), "Location enabled", Toast.LENGTH_SHORT).show();
+            mylistener = new ListLocationListener();
+            locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,100,1, mylistener);
+            if(locManager!=null){
+                currentLoc=locManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            }
+            if(currentLoc!=null){
+             //   Toast.makeText(getApplicationContext(), "Location: " + currentLoc.toString(), Toast.LENGTH_SHORT).show();
+            }
+            else{
+            //    Toast.makeText(getApplicationContext(), "No location found", Toast.LENGTH_SHORT).show();
+            }
+
         }
 
         display();
@@ -106,6 +124,7 @@ public class ListView extends AppCompatActivity{
         User[] testUsers = new User[3];
         String[] descripts = new String[3];
         String[] imgs = new String[3];
+        Location[] locs = new Location[3];
 
         for(int i = 0; i < testCals.length; i++){
             testCals[i] = Calendar.getInstance();
@@ -125,6 +144,17 @@ public class ListView extends AppCompatActivity{
         imgs[0] = "hummingbird";
         imgs[1] = "fox";
         imgs[2] = "cottontail";
+        locs[0] = new Location("");
+        locs[0].setLatitude(42.9);
+        locs[0].setLongitude(-87.7);
+
+        locs[1] = new Location("");
+        locs[1].setLatitude(40);
+        locs[1].setLongitude(-80);
+
+        locs[2] = new Location("");
+        locs[2].setLatitude(35.5);
+        locs[2].setLongitude(-85.3);
 
         for(int i = 0; i < descripts.length; i++){
             Sighting tmp = new Sighting();
@@ -133,6 +163,7 @@ public class ListView extends AppCompatActivity{
             tmp.setAnimal(testAnims[i]);
             tmp.setDescription(descripts[i]);
             tmp.setImageFileName(imgs[i]);
+            tmp.setLocation(locs[i]);
             results.add(tmp);
         }
     }
@@ -166,7 +197,19 @@ public class ListView extends AppCompatActivity{
             speciesTest.setText(results.get(i).getAnimal().getCommonName());
             lilBox.addView(speciesTest);
 
-            //TextView distanceText = new TextView(this);
+            //add distance
+            TextView distanceText = new TextView(this);
+
+            if(currentLoc!=null && results.get(i).getLocation()!=null){
+                float distance = currentLoc.distanceTo(results.get(i).getLocation());
+                String tmp = distanceString(distance);
+                distanceText.setText(tmp);
+            }
+            else{
+                distanceText.setText("Distance: unknown");
+            }
+            lilBox.addView(distanceText);
+
             TextView recencyText = new TextView(this);
             String tmp;
             Calendar c = results.get(i).getTimestamp();
@@ -188,6 +231,38 @@ public class ListView extends AppCompatActivity{
 
             cards.addView(bigBox);
         }
+    }
+
+    private void recalculateDistances(){
+        if(currentLoc!=null){
+            for (int i = 0; i < results.size(); i++){
+                if(results.get(i).getLocation()!=null){
+                    LinearLayout bigBox = findViewById(i);
+                    if(bigBox != null){
+                        LinearLayout lilBox = (LinearLayout) bigBox.getChildAt(1);
+                        if(lilBox != null){
+                            TextView distanceText = (TextView) lilBox.getChildAt(1);
+                            if(distanceText != null){
+                                float distance = currentLoc.distanceTo(results.get(i).getLocation());
+                                String tmp = distanceString(distance);
+                                distanceText.setText(tmp);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private String distanceString(float distance){
+        String result = "Distance: ";
+        if(distance < 1000.0){
+            result += String.format("%.2f meters", distance);
+        }
+        else{
+            result += String.format("%.2f km", distance / 1000.0);
+        }
+        return result;
     }
 
     private String timeElapsed (Calendar olderTime, Calendar curTime){
@@ -230,5 +305,23 @@ public class ListView extends AppCompatActivity{
             }
         }
     };
+
+    private class ListLocationListener implements LocationListener {
+        @Override
+        public void onLocationChanged(Location location){
+            currentLoc = location;
+           // Toast.makeText(getApplicationContext(), "Location changed: " + currentLoc.toString(), Toast.LENGTH_SHORT).show();
+            recalculateDistances();
+        }
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras){
+        }
+        @Override
+        public void onProviderEnabled(String provider){
+        }
+        @Override
+        public void onProviderDisabled(String provider){
+        }
+    }
 
 }

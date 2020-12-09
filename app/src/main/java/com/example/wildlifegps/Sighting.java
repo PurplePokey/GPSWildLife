@@ -11,7 +11,7 @@ public class Sighting implements Serializable {
     private int ID;
     private User owner;
     private Animal animal;
-    private Location location;
+    private SerialLoc location;
     private Calendar timestamp;
     private String description;
     private String imageFileName;
@@ -47,11 +47,11 @@ public class Sighting implements Serializable {
     }
 
     public Location getLocation() {
-        return location;
+        return location.toRealLoc();
     }
 
     public void setLocation(Location location) {
-        this.location = location;
+        this.location = new SerialLoc(location.getLatitude(), location.getLongitude());
     }
 
     public Calendar getTimestamp() {
