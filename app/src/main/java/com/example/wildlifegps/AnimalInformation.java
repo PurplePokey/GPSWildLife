@@ -4,8 +4,13 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
-//import com.github.mikephil.charting.charts.LineChart;
-//import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
 
@@ -18,7 +23,7 @@ public class AnimalInformation extends AppCompatActivity {
     private TextView diet;
     private TextView appearance;
     private TextView stat;
-//    private LineChart mChart;
+    private LineChart mChart;
     Animal animal;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +46,7 @@ public class AnimalInformation extends AppCompatActivity {
         diet = findViewById(R.id.diet_info);
         stat = findViewById(R.id.status_info);
         appearance = findViewById(R.id.appearance_info);
-//        mChart = findViewById(R.id.chart);
+        mChart = findViewById(R.id.chart);
     }
     private void initListeners(){
 
@@ -61,6 +66,20 @@ public class AnimalInformation extends AppCompatActivity {
         createChart();
     }
     private void createChart(){
-//        ArrayList<Entry> values = new ArrayList<>();
+        ArrayList<Entry> values = new ArrayList<>();
+        XAxis xAxis = mChart.getXAxis();
+        YAxis yAxis = mChart.getAxisLeft();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(false);
+        yAxis.setDrawGridLines(false);
+        values.add(new Entry(1, 50));
+        values.add(new Entry(2, 100));
+        values.add(new Entry(3, 75));
+
+        LineDataSet set = new LineDataSet(values, animal.getCommonName() + " sightings per day");
+        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+        dataSets.add(set);
+        LineData data = new LineData(dataSets);
+        mChart.setData(data);
     }
 }
