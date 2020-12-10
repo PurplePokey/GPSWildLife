@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -13,6 +14,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -69,14 +71,26 @@ public class AnimalInformation extends AppCompatActivity {
         ArrayList<Entry> values = new ArrayList<>();
         XAxis xAxis = mChart.getXAxis();
         YAxis yAxis = mChart.getAxisLeft();
+        mChart.setTouchEnabled(true);
+        mChart.setPinchZoom(true);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
         yAxis.setDrawGridLines(false);
-        values.add(new Entry(1, 50));
+        DBHandler db=new DBHandler(this);
+        Calendar date = Calendar.getInstance();
+        date.add(Calendar.DAY_OF_MONTH, -7);
+        int count = 0;
+        for(int i = 1; i < 8; i++){
+            count = db.getDailySightingCount(animal.getAnimalID(), date);
+            values.add(new Entry(i, count));
+            date.add(Calendar.DAY_OF_MONTH, 1);
+        }
+        /*values.add(new Entry(1, 50));
         values.add(new Entry(2, 100));
-        values.add(new Entry(3, 75));
+        values.add(new Entry(3, 75));*/
 
-        LineDataSet set = new LineDataSet(values, animal.getCommonName() + " sightings per day");
+        LineDataSet set = new LineDataSet(values, animal.getCommonName() + " sightings per day"
+            +" this past week");
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(set);
         LineData data = new LineData(dataSets);
