@@ -49,6 +49,7 @@ public class ListView extends AppCompatActivity{
 
     private Button addSighting;
     private Button submit;
+    private Button mapButton;
     private ArrayList<Sighting> list = new ArrayList<>();
     private Spinner spin;
     private EditText tv;
@@ -111,12 +112,14 @@ public class ListView extends AppCompatActivity{
         roundBackground = getDrawable(R.drawable.rounded_textbox);
         addSighting=(Button) findViewById(R.id.add_sighting);
         submit = (Button) findViewById(R.id.submit);
+        mapButton = findViewById(R.id.map_view_button);
 
         tv = findViewById(R.id.searchview);
         spin = findViewById(R.id.search_list_dropdown);
     }
 
     private void initListeners(){
+        mapButton.setOnClickListener(gotoMap);
         addSighting.setOnClickListener(clickCreateSighting);
         submit.setOnClickListener(clickSubmit);
     }
@@ -141,7 +144,10 @@ public class ListView extends AppCompatActivity{
 
     private void display(){
         Calendar time = Calendar.getInstance();
-        cards.getChildAt(0).setVisibility(View.GONE);
+        //hide any placeholder or old sightings it may have
+        for(int i = 0; i < cards.getChildCount(); i++){
+            cards.getChildAt(i).setVisibility(View.GONE);
+        }
         for(int i = 0; i < results.size(); i++){
             //Create main container
             LinearLayout bigBox = new LinearLayout(this);
@@ -334,6 +340,16 @@ public class ListView extends AppCompatActivity{
                 i.putExtra("user", user);
                 startActivity(i);
             }
+        }
+    };
+
+    //Clicking the map view button
+    private View.OnClickListener gotoMap = new View.OnClickListener(){
+        public void onClick(View view){
+            Intent i = new Intent(ListView.this, MapView.class);
+            i.putExtra("Sightings", results);
+            i.putExtra("user", user);
+            startActivity(i);
         }
     };
 

@@ -47,5 +47,6 @@
     <string name="found_pet_str">Create a Found Pet Post</string>
     <string name="identify_str">Help by identifying this animal in the comments</string>
     <string name="uploadStr">Upload Image</string>
+    <string name="title_activity_map_view">Map</string>
 
 </resources>

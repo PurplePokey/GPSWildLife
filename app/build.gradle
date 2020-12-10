@@ -50,5 +50,3 @@ configurations.all {
         substitute module('org.hamcrest:hamcrest-core:1.1') with module('junit:junit:4.10')
     }
 }
-
-
