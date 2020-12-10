@@ -53,6 +53,7 @@ public class notifications extends AppCompatActivity {
         Button warningNotificationButton = findViewById(R.id.buttonWarn);
         // Finds the found pet button from the xml layout file
         Button foundNotificationButton = findViewById(R.id.buttonFound);
+        Button createFoundNotificationButton = findViewById(R.id.create_pet_lost);
 
         //Subscribing
         SubNotificationButton.setOnClickListener(new View.OnClickListener() {
@@ -100,9 +101,24 @@ public class notifications extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Starts the function below
-                foundNotification();
+                if(Subscribed == true) {
+                    foundNotification();
+                }
             }
         });
+
+    /*  //uncomment after merge:
+        createFoundNotificationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Starts the function below
+                if(Subscribed == true) {
+                    foundNotification();
+                }
+            }
+        });
+
+     */
     }
 
     private void updateLocation(){
@@ -126,11 +142,6 @@ public class notifications extends AppCompatActivity {
     }
 
 
-    //What will compare current location to sighting locations
-        //still need loop to constantly loop through updateLocation?
-        //still need to find way to compare to many sightings : loop through list of sightings?
-
-
     private void compareLocation() {
         //updateLocation();
         //check sighting
@@ -148,9 +159,6 @@ public class notifications extends AppCompatActivity {
             }
         }
     }
-
-
-
 
     private class MyLocationListener implements LocationListener{
         @Override
@@ -192,8 +200,8 @@ public class notifications extends AppCompatActivity {
         // Builds your notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher_round)
-                .setContentTitle("Your pet has been found!")
-                .setContentText("Your pet has been marked on your map.");
+                .setContentTitle("Your lost pet has been found")
+                .setContentText("Your pet will be marked on your map when found");
 
         // Creates the intent needed to show the notification
         Intent notificationIntent = new Intent(this, notifications.class);
@@ -204,5 +212,6 @@ public class notifications extends AppCompatActivity {
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         manager.notify(0, builder.build());
     }
+
 
 }
