@@ -96,7 +96,7 @@ public class ListView extends AppCompatActivity{
                 currentLoc=locManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
             }
             if(currentLoc!=null){
-             //   Toast.makeText(getApplicationContext(), "Location: " + currentLoc.toString(), Toast.LENGTH_SHORT).show();
+            //    Toast.makeText(getApplicationContext(), "Location: " + currentLoc.toString(), Toast.LENGTH_SHORT).show();
             }
             else{
             //    Toast.makeText(getApplicationContext(), "No location found", Toast.LENGTH_SHORT).show();
@@ -407,7 +407,7 @@ public class ListView extends AppCompatActivity{
         @Override
         public void onLocationChanged(Location location){
             currentLoc = location;
-           // Toast.makeText(getApplicationContext(), "Location changed: " + currentLoc.toString(), Toast.LENGTH_SHORT).show();
+        //    Toast.makeText(getApplicationContext(), "Location changed: " + currentLoc.toString(), Toast.LENGTH_SHORT).show();
             recalculateDistances();
         }
         @Override

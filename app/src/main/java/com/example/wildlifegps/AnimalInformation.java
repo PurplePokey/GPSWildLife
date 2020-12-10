@@ -1,5 +1,6 @@
 package com.example.wildlifegps;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ public class AnimalInformation extends AppCompatActivity {
     private TextView appearance;
     private TextView stat;
     private LineChart mChart;
+    private DBHandler db;
     Animal animal;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +35,6 @@ public class AnimalInformation extends AppCompatActivity {
         setContentView(R.layout.animal_info);
 
         getSupportActionBar().hide();
-
         initObjects();
         initViews();
         initListeners();
