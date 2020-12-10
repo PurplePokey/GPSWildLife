@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -82,6 +83,7 @@ public class login extends AppCompatActivity implements View.OnClickListener{
             }
             //else popup "username or password was invalid" and clear fields
             else{
+                Toast.makeText(activity, "Username or Password incorrect", Toast.LENGTH_LONG).show();
                 username.setText(null);
                 password.setText(null);
             }
@@ -89,6 +91,7 @@ public class login extends AppCompatActivity implements View.OnClickListener{
         }
         //else popup "please fill in all fields"
         else{
+            Toast.makeText(activity, "Please fill in all fields", Toast.LENGTH_LONG).show();
             username.setText(null);
             password.setText(null);
         }

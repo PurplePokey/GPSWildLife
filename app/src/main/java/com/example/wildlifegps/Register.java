@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -72,6 +73,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                     }
                     //popup "username is already taken"
                     else{
+                        Toast.makeText(activity, "Username taken", Toast.LENGTH_LONG).show();
                         username.setText(null);
                         password.setText(null);
                         password2.setText(null);
@@ -79,6 +81,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                 }
                 // popup "passwords did not match"
                 else{
+                    Toast.makeText(activity, "Passwords do not match", Toast.LENGTH_LONG).show();
                     username.setText(null);
                     password.setText(null);
                     password2.setText(null);
@@ -88,6 +91,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
             //else popup "please fill in all fields"
             else{
+                Toast.makeText(activity, "Fill in all fields", Toast.LENGTH_LONG).show();
                 username.setText(null);
                 password.setText(null);
                 password2.setText(null);

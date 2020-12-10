@@ -55,7 +55,7 @@ public class CreateSighting extends AppCompatActivity implements View.OnClickLis
     private double longitude;
     private Location location;
 
-
+    private Uri selectedImage;
     private Button upload;
     private Button cancel;
     private Button create;
@@ -163,7 +163,7 @@ public class CreateSighting extends AppCompatActivity implements View.OnClickLis
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         if(resultCode== Activity.RESULT_OK && data !=null)
         {
-            Uri selectedImage = data.getData();
+            selectedImage = data.getData();
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -202,7 +202,7 @@ public class CreateSighting extends AppCompatActivity implements View.OnClickLis
         sighting.setLocation(location);
         sighting.setTimestamp(calendar);
         sighting.setDescription(description);
-        sighting.setImageFileName(img);
+        sighting.setImageFileName(selectedImage);
         sighting.setFlagCount(0);
         sighting.setTags(tagList);
 

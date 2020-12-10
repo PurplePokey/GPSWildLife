@@ -164,6 +164,7 @@ public class ViewSighting extends AppCompatActivity {
         public void onClick(View view) {
             if(view.getId()==(R.id.animal_there_btn)){
 
+                dbh.updateTime(sighting);
             }
         }
     };

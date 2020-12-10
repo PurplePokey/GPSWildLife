@@ -54,6 +54,7 @@ public class LostPet extends AppCompatActivity implements View.OnClickListener {
     private Button upload;
     private Button cancel;
     private Button create;
+    private Uri selectedImage;
 
     Bitmap bitmap = null;
     byte img[];
@@ -75,7 +76,7 @@ public class LostPet extends AppCompatActivity implements View.OnClickListener {
 
     }
     private void initViews(){
-        photo=(ImageView) findViewById(R.id.sighting_photo);
+        photo=(ImageView) findViewById(R.id.lost_pet_pic);
         type=(EditText) findViewById(R.id.type_pet_lost);
         name = (EditText) findViewById(R.id.name_pet_lost);
         desc = (EditText) findViewById(R.id.desc_pet_lost);
@@ -113,8 +114,8 @@ public class LostPet extends AppCompatActivity implements View.OnClickListener {
     @Override
     public void onClick(View view){
         //upload image
-        if(view.getId()==(R.id.upload_image)){
-
+        if(view.getId()==(R.id.upload_lost)){
+            upload();
         }
 
         //if create sighting button is pressed
@@ -153,7 +154,7 @@ public class LostPet extends AppCompatActivity implements View.OnClickListener {
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         if(resultCode== Activity.RESULT_OK && data !=null)
         {
-            Uri selectedImage = data.getData();
+            selectedImage = data.getData();
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -173,11 +174,12 @@ public class LostPet extends AppCompatActivity implements View.OnClickListener {
 
         //get information to create sighting object
         String strTitle = type.getText().toString().trim();
+        String petname = name.getText().toString().trim();
         int id = sightingIDCount;
         User owner = new User(user);
-        Pet pet = new Pet (animalIDCount, strTitle);
+        Pet pet = new Pet (animalIDCount, strTitle, db.petIDCount, petname);
         pet.setLostFound(0);
-        db.addAnimal(pet);
+        db.addPet(pet);
         Calendar calendar = Calendar.getInstance();
         String description = desc.getText().toString().trim();
 
@@ -188,7 +190,7 @@ public class LostPet extends AppCompatActivity implements View.OnClickListener {
         sighting.setLocation(location);
         sighting.setTimestamp(calendar);
         sighting.setDescription(description);
-        sighting.setImageFileName(img);
+        sighting.setImageFileName(selectedImage);
 
         db.addSighting(sighting);
 

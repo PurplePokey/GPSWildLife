@@ -1,8 +1,11 @@
 package com.example.wildlifegps;
 
+import android.graphics.Bitmap;
 import android.location.Location;
+import android.net.Uri;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -14,13 +17,32 @@ public class Sighting implements Serializable {
     private SerialLoc location;
     private Calendar timestamp;
     private String description;
-    private byte imageFileName[];
+//    private byte imageFileName[];
     private int flagCount;
+    private Uri imageFileName;
+//
+//
+//    private Bitmap image;
     private ArrayList<String> tags = new ArrayList<>();
     private ArrayList<Comment> comments = new ArrayList<>();
+//
+//    public Bitmap getImage() {
+//        return image;
+//    }
+//
+//    public void setImage(Bitmap image) {
+//        this.image = image;
+//    }
 
+    public Uri getImageFileName() {
+        return imageFileName;
+    }
+
+    public void setImageFileName(Uri imageFileName) {
+        this.imageFileName = imageFileName;
+    }
     public Sighting(){
-
+        owner=new User();
     }
     public Animal getAnimal() {
         return animal;
@@ -69,14 +91,18 @@ public class Sighting implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public byte[] getImageFileName() {
-        return imageFileName;
-    }
-
-    public void setImageFileName(byte[] imageFileName) {
-        this.imageFileName = imageFileName;
-    }
+//
+//    public byte[] getImageFileName() {
+//        return imageFileName;
+//    }
+//
+//    public void setImageFileName(byte[] imageFileName) {
+//        this.imageFileName = new byte[imageFileName.length];
+//        for(int i = 0 ; i<imageFileName.length;i++){
+//            this.imageFileName[i]=imageFileName[i];
+//        }
+//
+//    }
 
     public int getFlagCount() {
         return flagCount;

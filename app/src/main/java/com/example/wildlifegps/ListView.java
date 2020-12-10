@@ -5,13 +5,16 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.graphics.drawable.Drawable;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Layout;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +28,9 @@ import android.widget.TextView;
 import android.widget.LinearLayout.LayoutParams;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -95,10 +101,10 @@ public class ListView extends AppCompatActivity{
                 currentLoc=locManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
             }
             if(currentLoc!=null){
-             //   Toast.makeText(getApplicationContext(), "Location: " + currentLoc.toString(), Toast.LENGTH_SHORT).show();
+                //   Toast.makeText(getApplicationContext(), "Location: " + currentLoc.toString(), Toast.LENGTH_SHORT).show();
             }
             else{
-            //    Toast.makeText(getApplicationContext(), "No location found", Toast.LENGTH_SHORT).show();
+                //    Toast.makeText(getApplicationContext(), "No location found", Toast.LENGTH_SHORT).show();
             }
 
         }
@@ -125,57 +131,21 @@ public class ListView extends AppCompatActivity{
         super.onStart();
     }
     private void initObjects(){
-        db=new DBHandler(activity);
 
-        //What follows is a bunch of placeholder data, replace it to integrate with db and search
-        Calendar[] testCals = new Calendar[3];
-        Animal[] testAnims = new Animal[3];
-        User[] testUsers = new User[3];
-        String[] descripts = new String[3];
-        String[] imgs = new String[3];
-        Location[] locs = new Location[3];
+        results = (ArrayList<Sighting>) getIntent().getSerializableExtra("Sighting");
 
-        for(int i = 0; i < testCals.length; i++){
-            testCals[i] = Calendar.getInstance();
+        if(results == null){
+            db=new DBHandler(activity);
+            results = db.filterByTime();
+            db.close();
         }
-        testCals[0].set(2020, 11, 7, 2, 4);
-        testCals[1].set(2020, 11, 5, 14, 30);
-        testCals[2].set(2019, 3, 5, 7, 28);
-        testAnims[0] = new Species(1, "Hummingbird", "Archilochus colubris", "LC", "nectar", "cute");
-        testAnims[1] = new Species(2, "Fox", "Vulpes vulpes", "LC", "rodents", "red");
-        testAnims[2] = new Species(3, "Cottontail", "Sylvilagus floridanus", "LC", "your garden", "bunny");
-        testUsers[0] = new User("FakeUser", "extra fake");
-        testUsers[1] = new User("Greg", "boop");
-        testUsers[2] = new User("Bob", "bobbo");
-        descripts[0] = "This bird flies so fast it scares me";
-        descripts[1] = "Found this fox in my backyard!";
-        descripts[2] = "BUN BUN";
-        imgs[0] = "hummingbird";
-        imgs[1] = "fox";
-        imgs[2] = "cottontail";
-        locs[0] = new Location("");
-        locs[0].setLatitude(42.9);
-        locs[0].setLongitude(-87.7);
 
-        locs[1] = new Location("");
-        locs[1].setLatitude(40);
-        locs[1].setLongitude(-80);
-
-        locs[2] = new Location("");
-        locs[2].setLatitude(35.5);
-        locs[2].setLongitude(-85.3);
-
-        for(int i = 0; i < descripts.length; i++){
-            Sighting tmp = new Sighting();
-            tmp.setOwner(testUsers[i]);
-            tmp.setTimestamp(testCals[i]);
-            tmp.setAnimal(testAnims[i]);
-            tmp.setDescription(descripts[i]);
-           // tmp.setImageFileName(imgs[i]);
-            tmp.setLocation(locs[i]);
-            results.add(tmp);
+        if(results == null || results.size() == 0){
+            Toast.makeText(getApplicationContext(), "No sightings found", Toast.LENGTH_SHORT).show();
         }
+
     }
+
 
     private void display(){
         Calendar time = Calendar.getInstance();
@@ -194,6 +164,22 @@ public class ListView extends AppCompatActivity{
             //Add image
             ImageView imgBox = new ImageView(this);
             imgBox.setImageResource(R.drawable.fox);
+            Uri selectedImage = results.get(i).getImageFileName();
+            Bitmap bitmap;
+            //byte[] img;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG,100,bos);
+                //img = bos.toByteArray();
+                imgBox.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
             LayoutParams imgParams = new LayoutParams(250, 250);
             imgBox.setLayoutParams(imgParams);
             bigBox.addView(imgBox);
@@ -379,7 +365,7 @@ public class ListView extends AppCompatActivity{
         @Override
         public void onLocationChanged(Location location){
             currentLoc = location;
-           // Toast.makeText(getApplicationContext(), "Location changed: " + currentLoc.toString(), Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getApplicationContext(), "Location changed: " + currentLoc.toString(), Toast.LENGTH_SHORT).show();
             recalculateDistances();
         }
         @Override

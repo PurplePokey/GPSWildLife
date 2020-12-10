@@ -5,7 +5,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.content.Context;
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
+import android.net.Uri;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -51,7 +54,7 @@ public class DBHandler extends SQLiteOpenHelper {
                     +"timeStamp varchar(20),"
                     +"title varchar(100),"
                     +"description varchar(280),"
-                    +"imgFile blob,"
+                    +"imgFile varchar(100),"
                     +"flagCount int DEFAULT 0,"
                     +"username varchar(30) not null,"
                     +"animal_id int,"
@@ -147,7 +150,8 @@ public class DBHandler extends SQLiteOpenHelper {
                     ":" + timestamp.get(Calendar.DAY_OF_MONTH) + ":" + timestamp.get(Calendar.YEAR);
             int flagCount = sighting.getFlagCount();
             String description = sighting.getDescription();
-            byte[] filename = sighting.getImageFileName();
+            String filename=sighting.getImageFileName().toString();
+//            byte[] filename = sighting.getImageFileName();
             String username = sighting.getOwner().getUsername();
             int aniID = sighting.getAnimal().getAnimalID();
 
@@ -225,12 +229,14 @@ public class DBHandler extends SQLiteOpenHelper {
         contentValues1.put("content", tag);
         contentValues1.put("sighting_id", sightingID);
         db.insert(TABLE_NAME_SIGHTINGTAGS, null, contentValues1);
+        cursor.close();
         db.close();
     }
 
     public void addPet(Pet pet){
+            petIDCount++;
         SQLiteDatabase db = this.getWritableDatabase();
-        int petID = pet.getPetID();
+        int petID = petIDCount;
         String petName = pet.getPetName();
         String common = pet.getCommonName();
         int animalID= pet.getAnimalID();
@@ -238,7 +244,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         ContentValues contentValues = new ContentValues();
         contentValues.put("animal_id", animalID);
-        contentValues.put("common_name", common);
+        contentValues.put("comm_name", common);
         db.insert(TABLE_NAME_ANIMALS, null, contentValues);
 
         ContentValues contentValues2 = new ContentValues();
@@ -246,7 +252,7 @@ public class DBHandler extends SQLiteOpenHelper {
         contentValues2.put("pet_name", petName);
         contentValues2.put("animal_id", animalID);
         contentValues2.put("lost_or_found", lostFound);
-        db.insert(TABLE_NAME_PETS, null, contentValues);
+        db.insert(TABLE_NAME_PETS, null, contentValues2);
         db.close();
 
     }
@@ -311,6 +317,7 @@ public class DBHandler extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("SELECT username FROM "+ TABLE_NAME_USERS + " WHERE username = '" + username+"'",null);
         bool=cursor.moveToFirst();
 
+        cursor.close();
         return bool;
     }
     //for login credentials
@@ -322,6 +329,7 @@ public class DBHandler extends SQLiteOpenHelper {
         bool=cursor.moveToFirst();
 
         //db.close();
+        cursor.close();
         db.close();
         return bool;
 
@@ -352,9 +360,11 @@ public class DBHandler extends SQLiteOpenHelper {
                 temp.setTimestamp(cal);
                 temp.setTitle(cursor.getString(4));
                 temp.setDescription(cursor.getString(5));
-                String image = (cursor.getString(6));
-                byte[] imgArr=image.getBytes();
-                temp.setImageFileName(imgArr);
+                temp.setImageFileName(Uri.parse(cursor.getString(6)));
+//                //String image
+//                byte[] imgArr= cursor.getBlob(cursor.getColumnIndex("imgFile"));
+//                Bitmap image = BitmapFactory.decodeByteArray(imgArr, 0, imgArr.length);
+//                temp.setImage(image);
                 temp.setFlagCount(Integer.parseInt(cursor.getString(7)));
                 //temp.getTags();
                 username=(cursor.getString(8));
@@ -362,6 +372,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 //temp.setAnimal(Integer.parseInt(cursor.getString(9)));
                 sightings.add(temp);
             }
+        cursor.close();
             db.close();
             return sightings;
         }
@@ -392,15 +403,18 @@ public class DBHandler extends SQLiteOpenHelper {
                 temp.setTimestamp(cal);
                 temp.setTitle(cursor.getString(4));
                 temp.setDescription(cursor.getString(5));
-                String image = (cursor.getString(6));
-                byte[] imgArr=image.getBytes();
-                temp.setImageFileName(imgArr);
+            temp.setImageFileName(Uri.parse(cursor.getString(6)));
+//            //String image
+//            byte[] imgArr= cursor.getBlob(cursor.getColumnIndex("imgFile"));
+//            Bitmap image = BitmapFactory.decodeByteArray(imgArr, 0, imgArr.length);
+//            temp.setImage(image);
                 temp.setFlagCount(Integer.parseInt(cursor.getString(7)));
                 //temp.getTags();
                 username=(cursor.getString(8));
                 temp.getOwner().setUsername(username);
                 sightings.add(temp);
             }
+        cursor.close();
             db.close();
             return sightings;
         }
@@ -411,6 +425,8 @@ public class DBHandler extends SQLiteOpenHelper {
         Location location = new Location("");
         String time;
         String username;
+        String arr[];
+        Calendar cal;
 
         //sighting_id may nee to be surrounded by ' '
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME_SIGHTINGS + " ORDER BY sighting_id DESC", null);
@@ -424,21 +440,24 @@ public class DBHandler extends SQLiteOpenHelper {
                 //temp.setLocation(cursor.getString(1));
                 time=cursor.getString(3);
                 //HH:MM MM/DD/YY
-                String[] arr = time.replaceAll("[\\:\\/]", " ").split(" ");
-                Calendar cal = Calendar.getInstance();
+                arr = time.replaceAll("[\\:\\/]", " ").split(" ");
+                cal = Calendar.getInstance();
                 cal.set(Integer.parseInt(arr[4]), Integer.parseInt(arr[2]), Integer.parseInt(arr[3]), Integer.parseInt(arr[0]), Integer.parseInt(arr[1]));
                 temp.setTimestamp(cal);
                 temp.setTitle(cursor.getString(4));
                 temp.setDescription(cursor.getString(5));
-                String image = (cursor.getString(6));
-                byte[] imgArr=image.getBytes();
-                temp.setImageFileName(imgArr);
+                temp.setImageFileName(Uri.parse(cursor.getString(6)));
+//                //String image
+//                byte[] imgArr= cursor.getBlob(cursor.getColumnIndex("imgFile"));
+//                Bitmap image = BitmapFactory.decodeByteArray(imgArr, 0, imgArr.length);
+//                temp.setImage(image);
                 temp.setFlagCount(Integer.parseInt(cursor.getString(7)));
                 //temp.getTags();
                 username=(cursor.getString(8));
                 temp.getOwner().setUsername(username);
                 sightings.add(temp);
             }
+            cursor.close();
             db.close();
             return sightings;
         }
@@ -462,6 +481,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         animal.setObservers(observers);
 
+        cursor1.close();
         //check if it is a species
         boolean bool = false;
         Cursor cursor2 = db.rawQuery("SELECT * FROM "+ TABLE_NAME_SPECIES + " WHERE animal_id = '" + animal.getAnimalID() + "'",null);
@@ -469,10 +489,13 @@ public class DBHandler extends SQLiteOpenHelper {
         if(bool){
             Species species = new Species(animal.getAnimalID(), animal.getCommonName(), cursor2.getString(0), cursor2.getString(2),
                     cursor2.getString(3), cursor2.getString(4));
+            cursor2.close();
             db.close();
+
             return species;
         }
         else{
+            cursor2.close();
             db.close();
             return animal;
         }
